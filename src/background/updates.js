@@ -56,7 +56,8 @@ export async function checkForRelease({ force = false } = {}) {
   const rel = await res.json();
   const current = chrome.runtime.getManifest().version;
   const newer = rel.tag_name && compareVersions(rel.tag_name, current) > 0;
-  const zip = (rel.assets ?? []).find((a) => a.name?.endsWith('.zip'));
+  // The extension zip, not a companion app (outlier-lab-companion-*.zip sorts first).
+  const zip = (rel.assets ?? []).find((a) => /^(outlier-lab|youtube-toolkit)-v[^/]*\.zip$/.test(a.name ?? ''));
   const info = newer ? { version: rel.tag_name.replace(/^v/, ''), url: rel.html_url ?? RELEASES_PAGE, zip: zip?.browser_download_url ?? null, notes: (rel.body ?? '').slice(0, 1500) } : null;
   await chrome.storage.local.set({ updateCheckedAt: Date.now(), updateAvailable: info });
   return info;
