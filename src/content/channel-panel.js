@@ -50,7 +50,7 @@ YTK.channelPanel = (() => {
 
   function ensureHost() {
     if (!host) {
-      host = h('div', { id: 'ytk-channel-panel' });
+      host = YTK.own(h('div', { id: 'ytk-channel-panel' }));
       root = host.attachShadow({ mode: 'open' });
     }
     if (!host.isConnected) document.body.append(host);
@@ -267,7 +267,7 @@ YTK.channelPanel = (() => {
       return;
     }
     if (!fab) {
-      fab = h('div', { id: 'ytk-fab' });
+      fab = YTK.own(h('div', { id: 'ytk-fab' }));
       const shadow = fab.attachShadow({ mode: 'open' });
       shadow.append(
         h('style', {}, FAB_CSS),
@@ -282,6 +282,11 @@ YTK.channelPanel = (() => {
     if (!fab.isConnected) document.body.append(fab);
   }
 
+  YTK.onStop(() => {
+    close();
+    fab?.remove();
+  });
+
   document.addEventListener('ytk-saved-changed', () => {
     if (!state?.data || !host?.isConnected) return;
     const list = root.querySelector('.list');
@@ -289,7 +294,7 @@ YTK.channelPanel = (() => {
     render();
     const next = root.querySelector('.list');
     if (next) next.scrollTop = scroll;
-  });
+  }, { signal: YTK.signal });
 
   return { open, close, syncFab };
 })();

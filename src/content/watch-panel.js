@@ -68,7 +68,7 @@ YTK.watchPanel = (() => {
 
   async function mount(floating) {
     if (!host) {
-      host = h('div', { id: 'ytk-watch-panel' });
+      host = YTK.own(h('div', { id: 'ytk-watch-panel' }));
       root = host.attachShadow({ mode: 'open' });
     }
     host.classList.toggle('floating', floating);
@@ -207,9 +207,11 @@ YTK.watchPanel = (() => {
     load();
     return el;
   }
-  chrome.storage.onChanged.addListener((changes, area) => {
+  const onNotesChanged = (changes, area) => {
     if (area === 'local' && notesUi && changes[`sn:${notesUi.id}`]) notesUi.load();
-  });
+  };
+  chrome.storage.onChanged.addListener(onNotesChanged);
+  YTK.onStop(() => chrome.storage.onChanged.removeListener(onNotesChanged));
 
   function heatSection() {
     if (heat === undefined) return null;
@@ -492,7 +494,8 @@ YTK.watchPanel = (() => {
     report = null;
   }
 
-  document.addEventListener('ytk-saved-changed', () => report && host?.isConnected && render());
+  document.addEventListener('ytk-saved-changed', () => report && host?.isConnected && render(), { signal: YTK.signal });
+  YTK.onStop(remove);
 
   return { show, remove };
 })();

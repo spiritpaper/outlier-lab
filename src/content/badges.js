@@ -103,13 +103,18 @@ YTK.badges = (() => {
   }
 
   function start() {
-    new MutationObserver(scanSoon).observe(document.body, {
+    const observer = new MutationObserver(scanSoon);
+    observer.observe(document.body, {
       childList: true,
       subtree: true,
       attributes: true,
       attributeFilter: ['href'],
     });
-    document.addEventListener('ytk-settings-changed', resetAll);
+    YTK.onStop(() => {
+      observer.disconnect();
+      for (const b of document.querySelectorAll('.ytk-badge')) b.remove();
+    });
+    document.addEventListener('ytk-settings-changed', resetAll, { signal: YTK.signal });
     scanSoon();
   }
 

@@ -25,7 +25,7 @@ function addQuota(units) {
     const { quota } = await chrome.storage.local.get('quota');
     const used = quota?.day === day ? quota.used : 0;
     await chrome.storage.local.set({ quota: { day, used: used + units } });
-  });
+  }).catch(() => {}); // one failed write mustn't stop the counting after it
   return quotaChain;
 }
 

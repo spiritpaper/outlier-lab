@@ -73,6 +73,26 @@ async function localAiRule() {
   });
 }
 
+// Chrome only runs content scripts in pages opened after the extension
+// loads, so after an install or an update (the self-reload included) open
+// YouTube tabs would keep a dead copy until reloaded. Give them a fresh one;
+// it takes over from the old copy (see content/shared.js).
+async function injectIntoOpenTabs(reason) {
+  for (const cs of chrome.runtime.getManifest().content_scripts ?? []) {
+    // The page hook outlives an update (it's part of the page), so it's only added on install.
+    if (cs.world === 'MAIN' && reason !== 'install') continue;
+    for (const tab of await chrome.tabs.query({ url: cs.matches })) {
+      if (tab.discarded) continue;
+      const target = { tabId: tab.id };
+      if (cs.css?.length) await chrome.scripting.insertCSS({ target, files: cs.css }).catch(() => {});
+      await chrome.scripting.executeScript({ target, files: cs.js, world: cs.world ?? 'ISOLATED' }).catch(() => {});
+    }
+  }
+}
+
+chrome.runtime.onInstalled.addListener(({ reason }) => {
+  if (reason === 'install' || reason === 'update') injectIntoOpenTabs(reason).catch(() => {});
+});
 chrome.runtime.onInstalled.addListener(() => localAiRule().catch(() => {}));
 chrome.runtime.onInstalled.addListener(setup);
 chrome.runtime.onStartup.addListener(setup);
@@ -355,7 +375,8 @@ const handlers = {
 chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
   const handler = handlers[msg?.type];
   if (!handler) return false;
-  handler(msg).then(
+  // Through a promise, so a handler that throws or returns a plain value still answers.
+  Promise.resolve().then(() => handler(msg)).then(
     (data) => sendResponse({ ok: true, data }),
     (err) => sendResponse({ ok: false, error: err.message, reason: err.reason ?? '' }),
   );

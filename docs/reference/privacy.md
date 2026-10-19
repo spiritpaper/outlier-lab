@@ -47,3 +47,4 @@ AI requests go directly from your browser to the provider you connected, under t
 | YouTube and Google API hosts | Read public YouTube data and, if signed in, your analytics |
 | AI provider hosts (optional) | Requested only when you connect that provider (`localhost` for Local AI) |
 | `declarativeNetRequestWithHostAccess` | Removes the browser's Origin header from the extension's own requests to `localhost`, so Ollama accepts them. It has no effect until you allow `localhost` for Local AI, and never touches other sites. |
+| `scripting` | After an install or update, adds Outlier Lab's badges and video panel to YouTube tabs that were already open, so you don't have to reload them. Only on youtube.com. |
