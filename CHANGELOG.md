@@ -2,6 +2,14 @@
 
 All notable changes to Outlier Lab (called YT Toolkit before 0.11.0). Each release's section becomes its GitHub Release notes.
 
+## [0.11.1] - 2026-10-18
+
+### Fixed
+- **Copy buttons.** "Copy report" on an Audience lab pitch, conversation or title test copied the word "undefined"; every result now copies as readable text. When Chrome refuses the normal way of copying, every copy button now falls back to another method, and it says "Copied ✓" or that copying failed instead of doing nothing.
+
+### Added
+- **Copy buttons in Ask your audience** for the latest pitch's answers and for the conversation.
+
 ## [0.11.0] - 2026-10-17
 
 YT Toolkit is now **Outlier Lab**: same extension, same data, a name that fits what it has become.
