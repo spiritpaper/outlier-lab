@@ -2,6 +2,22 @@
 
 All notable changes to Outlier Lab (called YT Toolkit before 0.11.0). Each release's section becomes its GitHub Release notes.
 
+## [0.11.2] - 2026-10-19
+
+A stability release: safer updates, and fixes from a review of the whole extension.
+
+### Fixed
+- **Updating no longer risks breaking the extension.** The update scripts used to delete everything in the extension folder and then copy the new version in, so a failed copy (a locked file on Windows, a full disk) left the extension broken, and if its update check ran in that moment Chrome dropped it. Now the new files are copied over the old ones, files the new version no longer has are removed afterwards, and `manifest.json`, which makes the extension reload, is written last. The scripts also check that the folder really holds Outlier Lab and that the download is complete. The extension never reloads while its files can't be read.
+- **YouTube tabs keep working after an update.** Open tabs used to keep a dead copy of Outlier Lab until reloaded: no badges, and a panel asking you to reload. They now get the new version right away. This needs the `scripting` permission (only on youtube.com, see [Privacy](docs/reference/privacy.md)).
+- **Old test screenings were deleted.** Only the newest 60 saved results were kept, conversations and pitches included, so an active user lost old screenings and the Forecast vs reality results that calibrate new ones. Results checked against the real numbers are now always kept, and the rest are kept by last activity.
+- **Restoring a backup skipped audience groups** if this browser already had one. They now merge group by group.
+- The update notice's **Download** link pointed at the Mac companion app instead of the extension zip.
+- Clicking **Sign in** while Outlier Lab was silently renewing the Google sign-in could fail with "session expired".
+- Smaller robustness fixes: a request to the background can no longer go unanswered, and one failed write no longer stops the API quota counter.
+
+### Changed
+- Docs: keep **Developer mode** on in `chrome://extensions`. Chrome turns off extensions loaded with Load unpacked when it's off, which shows up after the next update. See [Troubleshooting](docs/reference/troubleshooting.md).
+
 ## [0.11.1] - 2026-10-18
 
 ### Fixed

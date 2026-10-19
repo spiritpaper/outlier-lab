@@ -82,7 +82,7 @@ The core idea in one line: **outlier score = video views ÷ median views of the 
 No build step and no dependencies: plain ES modules loaded straight from `src/`.
 
 ```
-npm test      # 141 tests: math, the background against a fake YouTube API, AI providers (cloud and local), the Audience lab, storage, UI helpers
+npm test      # 143 tests: math, the background against a fake YouTube API, AI providers (cloud and local), the Audience lab, storage, UI helpers
 ```
 
 After editing, click the extension's reload icon in `chrome://extensions`, then reload YouTube tabs. See [Architecture](docs/development/architecture.md) and [Releasing](docs/development/releasing.md) (push a `vX.Y.Z` tag and GitHub Actions publishes the release zip). Changes are listed in the [changelog](CHANGELOG.md).

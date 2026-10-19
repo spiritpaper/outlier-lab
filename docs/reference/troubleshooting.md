@@ -15,7 +15,10 @@ Enable it on the [API page](https://console.cloud.google.com/apis/library/youtub
 The 10,000-unit daily limit resets at midnight Pacific time. Saved data keeps working meanwhile. See [what costs what](quota.md).
 
 **No badges or panel on YouTube.**
-Reload the YouTube tab after installing or updating the extension. Check the popup's **On YouTube** toggles. After reloading the extension in `chrome://extensions`, open YouTube tabs need a reload too ("Extension was updated. Reload this tab.").
+Check the popup's **On YouTube** toggles. Open YouTube tabs pick up an install or update by themselves (from 0.11.2; before that, reload the tab). If a tab still shows "Extension was updated. Reload this tab.", reload it once.
+
+**The extension disappeared, or is turned off after an update.**
+Chrome only runs extensions loaded with **Load unpacked** while **Developer mode** is on (top right of `chrome://extensions`). With it off, Chrome turns Outlier Lab off the next time it reloads, which happens after every update, and may hide it from the list. Turn Developer mode on and keep it on, then switch Outlier Lab back on. If Chrome asks at startup whether to disable developer-mode extensions, keep them. Your data is safe as long as you don't click **Remove**: it stays in Chrome, tied to the extension.
 
 ## Transcripts
 
