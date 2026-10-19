@@ -23,7 +23,9 @@ async function diskStamp() {
     }
   };
   const [build, manifest] = await Promise.all([get('build.json'), get('manifest.json')]);
-  return stampOf(build, manifest);
+  // No readable manifest: the folder is mid-update (or broken). Reloading now
+  // would make Chrome drop the extension, so report no stamp at all.
+  return manifest?.version ? stampOf(build, manifest) : null;
 }
 
 /** Records which files this running copy was loaded from (on install, reload and browser start). */
@@ -36,10 +38,10 @@ export async function reloadIfUpdated() {
   const { loadedBuild } = await chrome.storage.session.get('loadedBuild');
   const now = await diskStamp();
   if (!loadedBuild) {
-    await chrome.storage.session.set({ loadedBuild: now });
+    if (now) await chrome.storage.session.set({ loadedBuild: now });
     return false;
   }
-  if (now === loadedBuild) return false;
+  if (!now || now === loadedBuild) return false;
   const open = await chrome.runtime.getContexts({ contextTypes: ['TAB', 'POPUP', 'SIDE_PANEL'] }).catch(() => []);
   if (open.length) return false; // try again later, when nothing would be closed
   chrome.runtime.reload();

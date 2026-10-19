@@ -8,6 +8,7 @@
 set -eu
 dir="${1:?usage: sh scripts/update.sh /path/to/extension-folder}"
 [ -f "$dir/manifest.json" ] || { echo "No manifest.json in $dir: is that the extension folder?" >&2; exit 1; }
+grep -qE '"name": *"(Outlier Lab|YT Toolkit)"' "$dir/manifest.json" || { echo "$dir doesn't hold Outlier Lab; nothing changed." >&2; exit 1; }
 api="https://api.github.com/repos/spiritpaper/outlier-lab/releases/latest"
 json=$(curl -fsSL "$api")
 latest=$(printf '%s' "$json" | sed -n 's/.*"tag_name": *"v\{0,1\}\([^"]*\)".*/\1/p' | head -1)
@@ -22,8 +23,16 @@ trap 'rm -rf "$tmp"' EXIT
 curl -fsSL -o "$tmp/release.zip" "$url"
 mkdir "$tmp/new"
 unzip -q "$tmp/release.zip" -d "$tmp/new"
-[ -f "$tmp/new/manifest.json" ] || { echo "The download doesn't look like the extension; nothing changed." >&2; exit 1; }
-# Replace the folder's contents with the release (removing files it no longer has).
-find "$dir" -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+[ -f "$tmp/new/manifest.json" ] && [ -f "$tmp/new/src/background/index.js" ] || { echo "The download doesn't look like the extension; nothing changed." >&2; exit 1; }
+# Copy the new files over the old ones, never emptying the folder, and the
+# manifest last: the extension reloads itself when the manifest changes, so
+# it must only see it once every other file is in place.
+mv "$tmp/new/manifest.json" "$tmp/manifest.json"
 cp -R "$tmp/new/." "$dir/"
+# Then remove the files the new version no longer has.
+(cd "$dir" && find . -type f ! -path './.git/*' ! -name manifest.json) | while IFS= read -r f; do
+  [ -e "$tmp/new/$f" ] || rm -f "$dir/$f"
+done
+find "$dir" -mindepth 1 -type d -empty ! -path "$dir/.git*" -delete 2>/dev/null || true
+cp "$tmp/manifest.json" "$dir/manifest.json"
 echo "Updated $current -> $latest. The extension reloads itself shortly."
