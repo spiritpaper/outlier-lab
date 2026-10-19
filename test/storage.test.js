@@ -178,3 +178,9 @@ test('restoring merges notebook lessons and experiments item by item', async () 
   assert.deepEqual(Object.fromEntries(Object.entries(store.notebook.lessons).map(([k, v]) => [k, v.text])), { a: 'mine, newer', b: 'only here', c: 'only in backup' });
   assert.equal(store.notebook.experiments.x.hypothesis, 'h');
 });
+
+test('restoring merges audience groups group by group', async () => {
+  store.avatars = { g1: { id: 'g1', name: 'mine, newer', updatedAt: 9, avatars: [] } };
+  await admin.importAll({ app: 'yt-toolkit', version: 2, data: { avatars: { g1: { id: 'g1', name: 'backup, older', updatedAt: 5, avatars: [] }, g2: { id: 'g2', name: 'only in backup', updatedAt: 1, avatars: [] } } } });
+  assert.deepEqual(Object.fromEntries(Object.entries(store.avatars).map(([k, g]) => [k, g.name])), { g1: 'mine, newer', g2: 'only in backup' });
+});

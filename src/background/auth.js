@@ -81,6 +81,8 @@ export async function getToken({ interactive = false } = {}) {
   if (googleToken && googleToken.expiresAt > Date.now()) return googleToken.token;
   const { signedIn } = await settings();
   if (!signedIn && !interactive) throw new AuthError('Sign in with Google to see your own analytics.', 'signedOut');
+  // A click always opens the window, even while a silent renewal is still running.
+  if (interactive) return authorize({ interactive });
   pending ??= authorize({ interactive }).finally(() => (pending = null));
   return pending;
 }

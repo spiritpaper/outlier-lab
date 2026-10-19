@@ -211,6 +211,8 @@ export function summarizeBackup(backup) {
 }
 
 const stamp = (v) => (v && typeof v === 'object' ? v.updatedAt ?? v.at ?? v.fetchedAt ?? 0 : 0);
+// Two { id: item } collections merged item by item; the newer copy of each wins.
+const newerEach = (a = {}, b = {}) => Object.fromEntries([...new Set([...Object.keys(a), ...Object.keys(b)])].map((id) => [id, (b[id]?.updatedAt ?? 0) > (a[id]?.updatedAt ?? 0) ? b[id] : a[id] ?? b[id]]));
 
 // Stand-in for the background's serialized mutators (used by tests).
 const direct = (key, fallback) => async (fn) => {
@@ -327,8 +329,10 @@ export async function importAll(backup, mutators = {}) {
     } else if (k === 'notebook') {
       // Lessons and experiments, item by item (the newer copy wins).
       const cur = current.notebook ?? {};
-      const pick = (a = {}, b = {}) => Object.fromEntries([...new Set([...Object.keys(a), ...Object.keys(b)])].map((id) => [id, (b[id]?.updatedAt ?? 0) > (a[id]?.updatedAt ?? 0) ? b[id] : a[id] ?? b[id]]));
-      toSet.notebook = { lessons: pick(cur.lessons, v.lessons), experiments: pick(cur.experiments, v.experiments) };
+      toSet.notebook = { lessons: newerEach(cur.lessons, v.lessons), experiments: newerEach(cur.experiments, v.experiments) };
+    } else if (k === 'avatars') {
+      // Audience groups, group by group (the newer copy wins).
+      toSet.avatars = newerEach(current.avatars, v);
     } else if (k === 'aiRuns') {
       const seen = new Set((current.aiRuns ?? []).map((r) => `${r.at}:${r.title}`));
       toSet.aiRuns = [...(current.aiRuns ?? []), ...v.filter((r) => !seen.has(`${r.at}:${r.title}`))].sort((a, b) => b.at - a.at).slice(0, 20);
