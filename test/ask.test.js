@@ -55,3 +55,19 @@ test('the prompts ask for realism, own voices and JSON', () => {
   assert.match(g.prompt, /CREATOR: hi/);
   assert.match(audienceChatPrompt({ avatars: ['x'], question: 'Q', single: true }).prompt, /Answer as this viewer/);
 });
+
+test('simText: every kind of saved result copies as readable text, never "undefined"', async () => {
+  const { simText } = await import('../src/lab/report.js');
+  const pitches = ['Idea one', 'Idea two'];
+  const viewers = cleanPitch({ viewers: [{ id: 'a', pitches: [{ pitch: 1, interest: 'yes', why: 'love it' }, { pitch: 2, interest: 'no' }] }], takeaways: 'Go with one.' }, avatars, 2);
+  const base = { at: 0, groupName: 'Core', avatars };
+  const pitch = simText({ ...base, kind: 'pitch', title: '2 ideas', pitches, ...viewers, scored: scorePitches(avatars, viewers.viewers, pitches) });
+  assert.match(pitch, /Idea one/);
+  assert.match(pitch, /Maya\n1\. Would watch: "love it"/);
+  assert.match(pitch, /Go with one\./);
+  const chat = simText({ ...base, kind: 'chat', title: 'Q', messages: [{ from: 'you', to: 'all', text: 'Would you watch?' }, { from: 'b', text: 'Sure' }] });
+  assert.match(chat, /You: Would you watch\?\nRaj: Sure/);
+  const screening = simText({ ...base, kind: 'screening', title: 'T', report: 'RAW', summary: { text: 'FIXES' } });
+  assert.match(screening, /FIXES\n\nRAW/);
+  for (const t of [pitch, chat, screening]) assert.doesNotMatch(t, /undefined/);
+});

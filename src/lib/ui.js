@@ -71,6 +71,38 @@ export function download(name, text, type = 'text/plain;charset=utf-8') {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+/**
+ * Copies text, falling back to a hidden textarea when the Clipboard API is
+ * refused (page not focused, a dialog in the way). Resolves true on success.
+ */
+export async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    const ta = h('textarea', { style: 'position:fixed;top:0;left:0;opacity:0', readonly: true });
+    ta.value = text;
+    (document.querySelector('dialog[open]') ?? document.body).append(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch { /* not supported */ }
+    ta.remove();
+    return ok;
+  }
+}
+
+/** A Copy button that says whether it worked. `text` is a string or a function returning one. */
+export function copyButton(label = 'Copy', text, attrs = {}) {
+  let timer;
+  const btn = h('button', { type: 'button', ...attrs, onclick: async () => {
+    const ok = await copyText(typeof text === 'function' ? text() : text);
+    btn.textContent = ok ? 'Copied ✓' : 'Copy failed: select the text and press Ctrl+C';
+    clearTimeout(timer);
+    timer = setTimeout(() => (btn.textContent = label), ok ? 1500 : 4000);
+  } }, label);
+  return btn;
+}
+
 // A short searchable topic from a video title ("I Spent 7 Days in Tokyo!!" -> "Spent 7 Days in Tokyo").
 export function topicOf(title) {
   return title

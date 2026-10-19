@@ -1,5 +1,5 @@
 import { mountShell } from '../lib/nav.js';
-import { send, h, fmtNum, fmtMult, fmtPct, tier, ageText, videoUrl, emptyState } from '../lib/ui.js';
+import { send, h, fmtNum, fmtMult, fmtPct, tier, ageText, videoUrl, emptyState, copyButton } from '../lib/ui.js';
 import { change, median, retentionSummary, formatTime } from '../lib/stats.js';
 import { lineChart } from '../lib/linechart.js';
 import { contentGaps } from '../lib/gaps.js';
@@ -48,7 +48,7 @@ const errorBox = (err) => h('div', { class: 'error' }, err.message ?? String(err
 
 function setupCard(auth, err) {
   const clientInput = h('input', { value: auth.clientId, placeholder: '1234567890-abc….apps.googleusercontent.com', spellcheck: 'false' });
-  const copyBtn = h('button', { type: 'button', onclick: async (e) => { await navigator.clipboard.writeText(auth.redirectUri); e.target.textContent = 'Copied'; } }, 'Copy');
+  const copyBtn = copyButton('Copy', auth.redirectUri);
   return h(
     'section',
     { class: 'card setup' },
@@ -186,7 +186,7 @@ function reviewView(r) {
   return h('div', { class: 'review' },
     h('div', { class: 'row' },
       h('span', { class: 'muted small grow' }, `${new Date(r.at).toLocaleString()} · last ${r.days} days · ${PROVIDERS[r.provider]?.label ?? r.provider} · ${r.model}`),
-      h('button', { onclick: (e) => navigator.clipboard.writeText(r.text).then(() => (e.target.textContent = 'Copied')) }, 'Copy')),
+      copyButton('Copy', r.text)),
     mdBlock(r.text),
     r.data && h('details', { class: 'review-data' }, h('summary', {}, 'The data this review was based on'), h('pre', {}, r.data)));
 }
@@ -653,7 +653,7 @@ async function runAi(box, btn, title, build) {
     await send({ type: 'saveAiRun', run: { title, text, provider: ai.provider, model: ai.model } });
     box.replaceChildren(
       h('div', { class: 'row' }, h('h3', { class: 'grow' }, title), h('span', { class: 'muted small' }, `${PROVIDERS[ai.provider].label} · ${ai.model}`),
-        h('button', { onclick: (e) => navigator.clipboard.writeText(text).then(() => (e.target.textContent = 'Copied')) }, 'Copy')),
+        copyButton('Copy', text)),
       mdBlock(text),
     );
   } catch (err) {

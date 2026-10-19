@@ -1,5 +1,5 @@
 import { mountShell } from '../lib/nav.js';
-import { send, h, fmtNum, fmtMult, tier, videoUrl, download, emptyState } from '../lib/ui.js';
+import { send, h, fmtNum, fmtMult, tier, videoUrl, download, emptyState, copyButton } from '../lib/ui.js';
 import { analyzeScript, hookSummary, DEVICES } from '../lib/script.js';
 import { formatTime } from '../lib/stats.js';
 import { activeAi, generate, scriptPrompt, outlinePrompt, shortsPrompt, PROVIDERS } from '../lib/ai.js';
@@ -340,7 +340,7 @@ function render({ idea, tx, heatmap, me, notes: noteEntry }, retention) {
 function aiResult(title, ai) {
   return h('div', {},
     h('div', { class: 'row' }, h('span', { class: 'muted small grow' }, `${title} · ${PROVIDERS[ai.provider]?.label ?? ai.provider} · ${ai.model} · ${new Date(ai.at).toLocaleString()}`),
-      h('button', { onclick: (e) => navigator.clipboard.writeText(ai.text).then(() => (e.target.textContent = 'Copied')) }, 'Copy')),
+      copyButton('Copy', ai.text)),
     mdBlock(ai.text));
 }
 

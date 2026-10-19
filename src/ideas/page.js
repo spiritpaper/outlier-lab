@@ -3,7 +3,7 @@ import { listIdeas } from '../lib/ideas.js';
 import { toCsv, median, trackingStats, heatmapSummary, formatTime } from '../lib/stats.js';
 import { activeAi, generate, breakdownPrompt, ideasPrompt, remixPrompt, thumbnailImage, PROVIDERS } from '../lib/ai.js';
 import { markdownToHtml } from '../lib/markdown.js';
-import { send, h, fmtNum, fmtMult, fmtPct, fmtDate, isoDate, round, tier, rank, videoUrl, download } from '../lib/ui.js';
+import { send, h, fmtNum, fmtMult, fmtPct, fmtDate, isoDate, round, tier, rank, videoUrl, download, copyText } from '../lib/ui.js';
 import { heatmapSvg } from '../lib/heatmap-view.js';
 
 mountShell('ideas');
@@ -391,8 +391,7 @@ function showDialog(title, { text = '', meta = '', loading = false, name = 'ai-r
 
 $('dlg-close').addEventListener('click', () => dlg.close());
 $('dlg-copy').addEventListener('click', async (e) => {
-  await navigator.clipboard.writeText(dlgText);
-  e.target.textContent = 'Copied';
+  e.target.textContent = (await copyText(dlgText)) ? 'Copied' : 'Copy failed';
   setTimeout(() => (e.target.textContent = 'Copy'), 1200);
 });
 $('dlg-download').addEventListener('click', () => download(`${dlgName}.md`, dlgText, 'text/markdown;charset=utf-8'));

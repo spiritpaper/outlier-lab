@@ -2,10 +2,10 @@
 // Stage 1 of the lab; test screenings build on these groups.
 
 import { mountShell } from '../lib/nav.js';
-import { send, h, emptyState } from '../lib/ui.js';
+import { send, h, emptyState, copyButton } from '../lib/ui.js';
 import { activeAi, generate, avatarsPrompt, PROVIDERS } from '../lib/ai.js';
 import { face } from './face.js';
-import { renderReport, expectations, REPORT_CSS } from './report.js';
+import { renderReport, simText, expectations, REPORT_CSS } from './report.js';
 import { askPanel } from './ask-panel.js';
 import { ASK_CSS } from './ask-view.js';
 import { runScreening } from './screen-run.js';
@@ -206,7 +206,7 @@ async function renderScreenings() {
             h('a', { href: '#screenings', onclick: (e) => { e.preventDefault(); history.replaceState(null, '', '#screenings'); render(); } }, '← All test screenings'),
             h('span', { class: 'grow' }),
             projects[sim.projectId] && h('a', { class: 'button-link', href: `../project/project.html?id=${sim.projectId}#screening` }, 'Open the project'),
-            h('button', { onclick: () => navigator.clipboard.writeText(`${sim.report}\n\n${sim.summary?.text ?? ''}`) }, 'Copy report'),
+            copyButton(sim.kind === 'chat' ? 'Copy conversation' : 'Copy report', () => simText(sim)),
             h('button', { class: 'danger', onclick: async () => { if (confirm('Delete this test screening?')) { await send({ type: 'screeningDelete', id: sim.id }); history.replaceState(null, '', '#screenings'); render(); } } }, 'Delete')),
           h('h2', { style: 'margin:8px 0 0' }, sim.projectTitle),
           renderReport(sim))

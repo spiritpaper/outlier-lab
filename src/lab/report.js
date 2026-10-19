@@ -6,7 +6,7 @@ import { lineChart } from '../lib/linechart.js';
 import { markdownToHtml } from '../lib/markdown.js';
 import { PROVIDERS } from '../lib/ai.js';
 import { face } from './face.js';
-import { renderPitch, renderChat } from './ask-view.js';
+import { renderPitch, renderChat, INTEREST } from './ask-view.js';
 
 const pct = (x) => (x == null ? '—' : `${Math.round(x * 100)}%`);
 const clock = (sec) => (sec == null ? '' : `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, '0')}`);
@@ -222,6 +222,45 @@ function renderTitleTest(sim, { compact, meta }) {
     h('section', { class: 'card' }, h('h3', {}, 'Which title they\'d click'), table, note,
       h('p', { class: 'muted small' }, 'Each viewer judged every title on its own, in a random order; "maybe" counts half. "Wins over": viewers who\'d click this title but not every other one.')),
     h('section', { class: 'card' }, h('h3', {}, 'Every viewer'), viewers));
+}
+
+// ---------- as plain text ----------
+
+/** Any saved result (screening, title test, pitch or conversation) as plain text, for Copy. */
+export function simText(sim) {
+  const name = Object.fromEntries((sim.avatars ?? []).map((a) => [a.id, a.name]));
+  const head = `${sim.title ?? sim.projectTitle ?? ''}\n${new Date(sim.at).toLocaleString()} · ${sim.groupName ?? ''}`;
+  const names = (ids) => ids.map((id) => name[id]).filter(Boolean).join(', ') || '—';
+  if (sim.kind === 'chat') {
+    return [head, ...(sim.messages ?? []).map((m) => m.from === 'you'
+      ? `\nYou${m.to && m.to !== 'all' ? ` (to ${name[m.to] ?? 'a viewer'})` : ''}: ${m.text}`
+      : `${name[m.from] ?? 'Viewer'}: ${m.text}`)].join('\n');
+  }
+  if (sim.kind === 'pitch') {
+    const ranked = [...(sim.scored?.pitches ?? [])].sort((a, b) => b.interest - a.interest);
+    return [head, '',
+      ...ranked.map((p) => `${p.i === sim.scored.best ? '★ ' : ''}${p.pitch}: ${pct(p.interest)} would watch. In: ${names([...p.yes, ...p.maybe])}. Wins over: ${names(p.winsOver)}.`),
+      sim.takeaways && `\nTakeaways\n${sim.takeaways}`,
+      '\nEvery viewer',
+      ...(sim.avatars ?? []).map((a) => [`\n${a.name}`, ...sim.pitches.map((p, i) => {
+        const ans = sim.viewers?.[a.id]?.answers[i];
+        return ans && `${i + 1}. ${INTEREST[ans.interest] ?? ans.interest}${ans.why ? `: "${ans.why}"` : ''}${ans.expect ? ` Expects: ${ans.expect}` : ''}${ans.instead ? ` Would rather: ${ans.instead}` : ''}`;
+      })].filter(Boolean).join('\n'))].filter((l) => l != null && l !== false).join('\n');
+  }
+  if (sim.kind === 'titles') {
+    const ranked = [...(sim.scored?.titles ?? [])].sort((a, b) => b.clickShare - a.clickShare);
+    return [head, '',
+      ...ranked.map((t) => `${t.letter === sim.scored.winner ? '★ ' : ''}${t.letter}. ${t.title}: ${pct(t.clickShare)} would click. Favorite of: ${names(t.favorites)}. Wins over: ${names(t.winsOver)}.`),
+      '\nEvery viewer',
+      ...(sim.avatars ?? []).map((a) => {
+        const v = sim.votes?.[a.id];
+        return [`\n${a.name}`, ...sim.titles.map((t, i) => {
+          const vote = v?.votes?.[i];
+          return `${'ABCD'[i]}. ${CLICK[vote?.click ?? 'no']}${v?.favorite === i ? ' (favorite)' : ''}${vote?.thought ? `: "${vote.thought}"` : ''}`;
+        })].join('\n');
+      })].join('\n');
+  }
+  return [head, '', sim.summary?.text, sim.report].filter(Boolean).join('\n\n');
 }
 
 // ---------- what to expect ----------

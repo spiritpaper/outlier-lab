@@ -2,12 +2,12 @@
 // chat. Used on a project (ideas start from its title and angle) and in the
 // Audience lab (ideas without a project yet).
 
-import { send, h } from '../lib/ui.js';
+import { send, h, copyButton } from '../lib/ui.js';
 import { activeAi } from '../lib/ai.js';
 import { parsePitches } from '../lib/ask.js';
 import { runPitch, askChat } from './ask-run.js';
 import { renderPitch, renderChat, ASK_CSS } from './ask-view.js';
-import { REPORT_CSS } from './report.js';
+import { REPORT_CSS, simText } from './report.js';
 
 let styled = false;
 
@@ -82,11 +82,12 @@ export function askPanel({ project = null } = {}) {
         pitches,
         h('div', { class: 'ask-row' }, pitchBtn)),
       status,
-      pitch && h('div', { class: 'screen-latest' }, h('h3', {}, 'Latest pitch'), renderPitch(pitch, { compact: true })),
+      pitch && h('div', { class: 'screen-latest' }, h('h3', {}, 'Latest pitch'), renderPitch(pitch, { compact: true }), copyButton('Copy every answer', () => simText(pitch))),
       h('div', { class: 'ask-chat' },
         h('h3', {}, chat ? `Conversation with ${chat.groupName}` : 'Ask a question'),
         chat && renderChat(chat),
         h('div', { class: 'ask-row' }, toSel, question, askBtn,
+          chat && copyButton('Copy conversation', () => simText(chat)),
           chat && h('button', { onclick: () => { chatId = '__new__'; draw(); } }, 'New conversation')),
         h('p', { class: 'muted small' }, 'Everyone: viewers who\'d actually have something to say answer, in their own voice. 1 AI call per message.'),
         chats.length > 1 && h('details', {}, h('summary', { class: 'small' }, `Earlier conversations (${chats.length - 1})`),

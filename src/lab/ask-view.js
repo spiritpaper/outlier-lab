@@ -5,7 +5,7 @@ import { markdownToHtml } from '../lib/markdown.js';
 import { face } from './face.js';
 
 const pct = (x) => (x == null ? '—' : `${Math.round(x * 100)}%`);
-const INTEREST = { yes: 'Would watch', maybe: 'Maybe', no: 'Not for me' };
+export const INTEREST = { yes: 'Would watch', maybe: 'Maybe', no: 'Not for me' };
 
 export function renderPitch(sim, { compact = false } = {}) {
   const name = Object.fromEntries(sim.avatars.map((a) => [a.id, a.name]));

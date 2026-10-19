@@ -3,7 +3,7 @@
 // does the work; see src/background/companion.js.
 
 import { mountShell } from '../lib/nav.js';
-import { send, h, emptyState, ageText } from '../lib/ui.js';
+import { send, h, emptyState, ageText, copyButton } from '../lib/ui.js';
 import { parseTime } from '../lib/notes.js';
 import { formatTime } from '../lib/stats.js';
 
@@ -28,8 +28,7 @@ let acknowledged = false;
 
 function idBox() {
   const id = chrome.runtime.id;
-  const btn = h('button', { onclick: () => navigator.clipboard.writeText(id).then(() => (btn.textContent = 'Copied ✓')) }, 'Copy');
-  return h('div', { class: 'idbox' }, h('span', {}, 'This extension\'s ID:'), h('code', {}, id), btn);
+  return h('div', { class: 'idbox' }, h('span', {}, 'This extension\'s ID:'), h('code', {}, id), copyButton('Copy', id));
 }
 
 function setupCard() {
