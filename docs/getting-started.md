@@ -4,7 +4,7 @@ About 10 minutes. You only need step 1 and 2 to use most features.
 
 ## 1. Install the extension
 
-1. Download the latest `outlier-lab-v….zip` from [Releases](https://github.com/spiritpaper/outlier-lab/releases) and unzip it into a folder (or clone the repository). Keep that folder somewhere permanent: Chrome gives an unpacked extension an ID based on its folder, and moving the folder later gives it a new ID with empty storage. (Use **Settings → Storage & data → Download backup** before moving it.)
+1. Download the latest `outlier-lab-v….zip` from [Releases](https://github.com/spiritpaper/outlier-lab/releases) and unzip it into a folder (or clone the repository). Keep that folder somewhere permanent and outside OneDrive, iCloud or Dropbox (on Windows, `Documents` and `Desktop` are often synced by OneDrive; `C:\Users\<you>\Outlier Lab` is not). Chrome gives an unpacked extension an ID based on its folder, and moving the folder later gives it a new ID with empty storage. (Use **Settings → Storage & data → Download backup** before moving it.)
 2. In Chrome, open `chrome://extensions`.
 3. Turn on **Developer mode** (top right), and leave it on: Chrome turns off extensions loaded this way when it is off.
 4. Click **Load unpacked** and choose that folder (the one containing `manifest.json`).

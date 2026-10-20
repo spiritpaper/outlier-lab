@@ -34,5 +34,8 @@ cp -R "$tmp/new/." "$dir/"
   [ -e "$tmp/new/$f" ] || rm -f "$dir/$f"
 done
 find "$dir" -mindepth 1 -type d -empty ! -path "$dir/.git*" -delete 2>/dev/null || true
-cp "$tmp/manifest.json" "$dir/manifest.json"
+# Written next to it and renamed over it, so Chrome never finds a half-written
+# manifest: one it can't read at startup leaves the extension out of the list.
+cp "$tmp/manifest.json" "$dir/manifest.json.new"
+mv -f "$dir/manifest.json.new" "$dir/manifest.json"
 echo "Updated $current -> $latest. The extension reloads itself shortly."

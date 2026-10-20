@@ -58,7 +58,7 @@ Home, Following, the Idea board and the project pages read saved data only.
 
 > **Why isn't it on the Chrome Web Store?** Publishing there needs a paid developer account, which this project can't cover yet. Installing by hand takes about two minutes, and later updates are one double-click (one command on Mac and Linux).
 
-1. Download `outlier-lab-v….zip` from the [latest release](https://github.com/spiritpaper/outlier-lab/releases/latest) and unzip it into a folder you'll keep (for example `Documents/Outlier Lab`). Chrome runs it from that folder, so don't delete it.
+1. Download `outlier-lab-v….zip` from the [latest release](https://github.com/spiritpaper/outlier-lab/releases/latest) and unzip it into a folder you'll keep and that isn't synced by OneDrive, iCloud or Dropbox (for example `C:\Users\<you>\Outlier Lab`, or `~/Outlier Lab` on Mac and Linux). Chrome runs it from that folder, so don't delete or move it.
 2. In Chrome, open `chrome://extensions`, turn on **Developer mode** (top right), click **Load unpacked** and pick that folder.
 3. Get a free [YouTube Data API v3](https://console.cloud.google.com/apis/library/youtube.googleapis.com) key (**Credentials → Create credentials → API key**), click the Outlier Lab icon and paste it.
 4. Reload YouTube. Then open **Home** from the popup and follow its checklist.

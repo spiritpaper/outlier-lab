@@ -20,6 +20,12 @@ Check the popup's **On YouTube** toggles. Open YouTube tabs pick up an install o
 **The extension disappeared, or is turned off after an update.**
 Chrome only runs extensions loaded with **Load unpacked** while **Developer mode** is on (top right of `chrome://extensions`). With it off, Chrome turns Outlier Lab off the next time it reloads, which happens after every update, and may hide it from the list. Turn Developer mode on and keep it on, then switch Outlier Lab back on. If Chrome asks at startup whether to disable developer-mode extensions, keep them. Your data is safe as long as you don't click **Remove**: it stays in Chrome, tied to the extension.
 
+**The extension is missing from `chrome://extensions` after restarting Chrome.**
+Chrome couldn't read the extension's folder when it started, so it left Outlier Lab out for that session. Your data is still there. This happens when the folder sits in OneDrive, iCloud or Dropbox (on Windows, `Documents` and `Desktop` are often synced by OneDrive, and its "Files On-Demand" can leave files online-only), on a removable drive, or was moved or deleted.
+
+1. Make the files available again: in OneDrive, right-click the folder and choose **Always keep on this device**, or put the folder back where it was. Then restart Chrome, or click **Load unpacked** and pick that same folder. The same folder brings back the same extension with your data.
+2. Then move it out of the synced folder for good: **Settings → Storage & data → Download backup**, move the folder somewhere like `C:\Users\<you>\Outlier Lab`, load it from there, and restore the backup in Settings. A new folder gives the extension a new ID, so its storage starts empty until you restore.
+
 ## Transcripts
 
 **"This video has no captions or transcript."**

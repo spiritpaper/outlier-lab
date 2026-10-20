@@ -54,7 +54,11 @@ try {
   }
   Get-ChildItem -Path $Folder -Recurse -Directory -Force | Where-Object { $_.FullName.Substring($Folder.Length).TrimStart('\', '/') -notmatch '^\.git' } |
     Sort-Object { $_.FullName.Length } -Descending | Where-Object { -not (Get-ChildItem -LiteralPath $_.FullName -Force) } | Remove-Item -Force
-  Copy-Item -LiteralPath $newManifest -Destination $manifestPath -Force
+  # Written next to it and swapped in, so Chrome never finds a half-written
+  # manifest: one it can't read at startup leaves the extension out of the list.
+  $staged = "$manifestPath.new"
+  Copy-Item -LiteralPath $newManifest -Destination $staged -Force
+  [IO.File]::Replace($staged, $manifestPath, [NullString]::Value)
   Write-Host "Updated $current -> $latest. The extension reloads itself shortly."
 } finally {
   Remove-Item -Recurse -Force $tmp -ErrorAction SilentlyContinue
