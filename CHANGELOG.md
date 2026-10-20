@@ -2,6 +2,14 @@
 
 All notable changes to Outlier Lab (called YT Toolkit before 0.11.0). Each release's section becomes its GitHub Release notes.
 
+## [0.11.3] - 2026-10-19
+
+### Fixed
+- **The extension could vanish from `chrome://extensions` after restarting Chrome.** If Chrome can't read the extension's folder when it starts, it leaves Outlier Lab out of the list for that session (your data stays). The update scripts used to rewrite `manifest.json` in place, so a Chrome starting in that moment found it half-written; they now write the new manifest next to it and swap it in at once.
+
+### Changed
+- Docs: install into a folder that isn't synced by OneDrive, iCloud or Dropbox (for example `C:\Users\<you>\Outlier Lab`). On Windows, `Documents` and `Desktop` are often synced by OneDrive, and its Files On-Demand can leave the files online-only when Chrome starts. [Troubleshooting](docs/reference/troubleshooting.md) explains how to get the extension back without losing data.
+
 ## [0.11.2] - 2026-10-19
 
 A stability release: safer updates, and fixes from a review of the whole extension.
