@@ -4,6 +4,7 @@ import { detectServer, cleanUrl, LOCAL_DEFAULT_URL, DEFAULT_MAX_CTX } from '../l
 import { SUPPORT_URL, SUPPORT_LABEL } from '../lib/support.js';
 import { summarizeBackup } from '../lib/storage-admin.js';
 import { RELEASES_API } from '../lib/update-config.js';
+import { pendingUpdate } from '../lib/versions.js';
 
 mountShell('settings');
 
@@ -33,6 +34,8 @@ async function showProvider() {
   const p = settings.provider;
   const info = PROVIDERS[p];
   const local = p === 'local';
+  $('provider-privacy').textContent = info.privacy ?? '';
+  $('provider-privacy').hidden = !info.privacy;
   $('local-fields').hidden = !local;
   $('local-advanced').hidden = !local;
   $('key-field').hidden = !!info.keyless || !!info.manual;
@@ -384,20 +387,17 @@ async function showUpdate(info) {
     $('update-status').textContent = 'This build is updated by its install script.';
     return;
   }
+  info = pendingUpdate(info, chrome.runtime.getManifest().version);
   $('update-status').textContent = info ? '' : updateCheckedAt ? `Up to date (checked ${new Date(updateCheckedAt).toLocaleString()}).` : '';
   $('update-box').replaceChildren();
   if (info) {
     const box = document.createElement('div');
     box.className = 'update-note';
     const title = document.createElement('b');
-    title.textContent = `Version ${info.version} is available.`;
+    title.textContent = `Version ${info.version} is available. Update it with the script below.`;
     const links = document.createElement('div');
     links.className = 'inline';
-    for (const [href, label] of [[info.zip, 'Download the zip'], [info.url, 'What\'s new']]) {
-      if (!href) continue;
-      const a = Object.assign(document.createElement('a'), { href, target: '_blank', rel: 'noopener', className: 'button-link', textContent: label });
-      links.append(a);
-    }
+    links.append(Object.assign(document.createElement('a'), { href: info.url, target: '_blank', rel: 'noopener', className: 'button-link', textContent: "What's new" }));
     box.append(title, links);
     $('update-box').append(box);
   }

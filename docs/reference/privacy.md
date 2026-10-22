@@ -1,6 +1,8 @@
 # Privacy
 
-Outlier Lab has **no server**. Nothing about you is collected by the extension's author.
+Outlier Lab is **local**. It has no server and no account, and nothing about you is collected by its author. Your research, saved outliers, ideas, scripts, notes and channel data stay on your computer and belong to you: back them up, move them or delete them whenever you like (**Settings → Storage & data**).
+
+The only time your work leaves your computer is when you click an AI button, and then it goes straight to the AI provider you picked. With Local AI, even that stays on your computer.
 
 ## What's stored, and where
 
@@ -35,7 +37,17 @@ On YouTube pages, the extension reads the page you're viewing to add badges and 
 
 ## AI providers
 
-AI requests go directly from your browser to the provider you connected, under that provider's terms. On Gemini's free tier, Google may use prompts to improve its products. Avoid sending anything you consider private (for example unpublished scripts) if that matters to you; use a paid tier or a provider whose terms you prefer.
+AI requests go directly from your browser to the provider you connected, under that provider's terms. Free plans are often paid for with your data, so it's worth knowing which is which. Settings shows the same note under each provider.
+
+| Provider | What happens to your prompts |
+| --- | --- |
+| Local AI (Ollama, LM Studio…) | Nothing leaves your computer. |
+| Google Gemini, free tier | Google may use prompts and answers to improve its products, and human reviewers may read them ([Gemini API terms](https://ai.google.dev/terms), "Unpaid Services"). This doesn't apply once billing is on. |
+| Google Gemini, paid | Not used to improve Google's products. |
+| OpenRouter | Depends on the host behind each model. Some free models are allowed to log or train on prompts; you can limit hosts in OpenRouter's privacy settings ([OpenRouter docs](https://openrouter.ai/docs/guides/privacy/logging)). |
+| OpenAI, Anthropic | Both say they don't train on API requests by default. |
+
+Terms change, so check the provider's current terms for anything sensitive. For unpublished scripts and ideas you'd rather keep to yourself, a paid key or Local AI is the safe choice.
 
 ## Permissions
 

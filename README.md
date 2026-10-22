@@ -2,7 +2,7 @@
 
 **A creator's laboratory for YouTube.** Find the videos that beat their channel, test your own ideas on realistic viewers before you publish, and learn from what really happened, so every video teaches the next one.
 
-Free and open source. Your data stays in your browser. AI is optional: use your own key (Gemini has a free tier), or run it fully offline on your own computer with Ollama.
+Free, open source and **local**: there's no Outlier Lab server. Your research, ideas, scripts and channel data live in your browser, and they're yours. AI is optional: use your own key, or run it fully offline on your own computer with Ollama. Free AI tiers are the one thing to know about: some providers may use what you send to improve their models ([which ones](docs/reference/privacy.md#ai-providers)).
 
 - **Discover:** outlier badges right on YouTube, a keyword explorer, video webs, a radar on the channels you follow, and content gaps.
 - **Plan:** an idea board where every video gets a workspace for its angle, titles, outline, script with script checks, shot list and thumbnail.

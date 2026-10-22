@@ -8,6 +8,8 @@ export const PROVIDERS = {
     label: 'Google Gemini',
     keyUrl: 'https://aistudio.google.com/apikey',
     keyHint: 'AIza…',
+    // What happens to what you send, per the provider's terms (shown in Settings).
+    privacy: 'On the free tier, Google may use your prompts and its answers to improve its products, and people may read them. With billing on, it doesn\'t. For unpublished scripts, consider a paid key or Local AI.',
     origins: ['https://generativelanguage.googleapis.com/*'],
     // "-latest" aliases always point at Google's current model.
     suggested: ['gemini-flash-latest', 'gemini-3.8-flash', 'gemini-3.7-flash', 'gemini-3.6-flash', 'gemini-2.5-flash'],
@@ -16,6 +18,7 @@ export const PROVIDERS = {
     label: 'OpenAI',
     keyUrl: 'https://platform.openai.com/api-keys',
     keyHint: 'sk-…',
+    privacy: 'OpenAI says it doesn\'t train on API requests by default.',
     origins: ['https://api.openai.com/*'],
     suggested: ['gpt-5.4-mini', 'gpt-5.4'],
   },
@@ -23,6 +26,7 @@ export const PROVIDERS = {
     label: 'Anthropic Claude',
     keyUrl: 'https://platform.claude.com/settings/keys',
     keyHint: 'sk-ant-…',
+    privacy: 'Anthropic says it doesn\'t train on API requests by default.',
     origins: ['https://api.anthropic.com/*'],
     suggested: ['claude-opus-5-5', 'claude-sonnet-5-5', 'claude-haiku-5-5'],
   },
@@ -30,6 +34,7 @@ export const PROVIDERS = {
     label: 'OpenRouter (hundreds of models)',
     keyUrl: 'https://openrouter.ai/keys',
     keyHint: 'sk-or-…',
+    privacy: 'Depends on the host behind each model: some free models may log your prompts or train on them. Check the model\'s page, or limit hosts in your OpenRouter privacy settings.',
     origins: ['https://openrouter.ai/*'],
     suggested: ['google/gemini-flash-latest', 'google/gemini-3.6-flash', 'openai/gpt-5.4-mini', 'anthropic/claude-sonnet-5.5'],
   },
@@ -37,6 +42,7 @@ export const PROVIDERS = {
   local: {
     label: 'Local AI (Ollama, LM Studio…)',
     keyless: true,
+    privacy: 'Runs on this computer: what you send never leaves it.',
     keyUrl: '',
     keyHint: '',
     origins: LOCAL_ORIGINS,
