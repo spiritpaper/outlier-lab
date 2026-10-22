@@ -378,10 +378,16 @@ YTK.watchPanel = (() => {
     const trend = YTK.fmtTrend(report.trend);
     const tier = YTK.tier(v.multiplier);
     const age = YTK.ageDays(v.publishedAt);
+    const lifetime = 'Average since upload: lifetime views divided by its age.';
     const velocity =
       age < 2
-        ? stat('Views / hour', YTK.fmtNum(v.views / Math.max(age * 24, 1)))
-        : stat('Views / day', YTK.fmtNum(v.views / age));
+        ? stat('Views / hour', YTK.fmtNum(v.views / Math.max(age * 24, 1)), lifetime)
+        : stat('Avg views / day', YTK.fmtNum(v.views / age), lifetime);
+    const r = report.recent;
+    const span = r && (r.hours < 48 ? `${Math.round(r.hours)} hours` : `${Math.round(r.hours / 24)} days`);
+    const lately = r
+      ? stat('Views / day now', YTK.fmtNum(r.perDay), `Measured: +${r.gained.toLocaleString()} views in the ${span} up to ${YTK.fmtAge(r.at)}, from view counts Outlier Lab saw at both times.`)
+      : stat('Views / day now', '—', 'Not measured yet: this needs two view counts at least 3 hours apart. Open the video again later, or save it to the Idea board to track it daily.');
     const saved = YTK.saved.has(v.id);
     const formatWord = v.format === 'short' ? 'Shorts' : 'long-form videos';
 
@@ -404,6 +410,7 @@ YTK.watchPanel = (() => {
         { class: 'grid' },
         stat('Views', YTK.fmtNum(v.views), v.views?.toLocaleString()),
         velocity,
+        lately,
         stat('Channel median', YTK.fmtNum(b?.median)),
         stat('Channel average', YTK.fmtNum(b?.mean), 'Mean views of the same videos; one viral hit can skew it.'),
         stat('Like rate', YTK.fmtPct(v.views ? v.likes / v.views : null, 2), `${YTK.fmtNum(v.likes)} likes`),

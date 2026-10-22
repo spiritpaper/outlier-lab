@@ -16,6 +16,8 @@ import {
   keywordMetrics,
   relatedPhrases,
   parseHeatmap,
+  addViewPoint,
+  recentViews,
   OUTLIER_MIN,
 } from '../lib/stats.js';
 import { addSuggestions } from '../lib/web.js';
@@ -25,6 +27,8 @@ const VIDEO_TTL = 1 * HOUR;
 const BASELINE_TTL = 12 * HOUR;
 const ANALYSIS_TTL = 6 * HOUR;
 const HANDLE_TTL = 30 * 24 * HOUR;
+// View counts over time, per video, kept while the video keeps being seen.
+const VIEW_HISTORY_TTL = 30 * 24 * HOUR;
 
 // Collapse concurrent requests for the same thing into one.
 const inflight = new Map();
@@ -91,9 +95,29 @@ export async function getVideos(ids, { fresh = false } = {}) {
     });
     const fresh = (body.items ?? []).map(normalizeVideo);
     await cache.setMany(fresh.map((v) => [`v:${v.id}`, v]), VIDEO_TTL);
+    await recordViews(fresh).catch(() => {});
     for (const v of fresh) result.set(v.id, v);
   }
   return result;
+}
+
+// Every fresh count from the API joins the video's view history, at no extra cost.
+async function recordViews(videos) {
+  const now = Date.now();
+  const keys = videos.map((v) => `vh:${v.id}`);
+  const have = await cache.getMany(keys);
+  await cache.setMany(videos.map((v, i) => [keys[i], addViewPoint(have.get(keys[i]) ?? [], now, v.views)]), VIEW_HISTORY_TTL);
+}
+
+/** { [videoId]: views per day lately (see recentViews) } for videos with enough history. */
+export async function recentViewsMany(ids) {
+  const have = await cache.getMany(ids.map((id) => `vh:${id}`));
+  const out = {};
+  for (const id of ids) {
+    const r = recentViews(have.get(`vh:${id}`));
+    if (r) out[id] = r;
+  }
+  return out;
 }
 
 export async function resolveChannelId(ref) {
@@ -268,6 +292,7 @@ export async function videoReport(id) {
     channel: base.channel,
     baseline: base[scored.format],
     trend: channelTrend(base.recent[scored.format]),
+    recent: (await recentViewsMany([id]))[id] ?? null,
   };
 }
 

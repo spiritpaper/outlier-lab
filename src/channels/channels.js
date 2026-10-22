@@ -65,7 +65,7 @@ function card(ch) {
         h('img', { src: v.thumb, alt: '', loading: 'lazy' }),
         h('span', { class: `pill tier-${tier(v.multiplier)}` }, fmtMult(v.multiplier)),
         h('div', { class: 't' }, v.title ?? v.id),
-        h('div', { class: 'm' }, `${fmtNum(v.views)} views · ${ageText(v.publishedAt)}${saved.has(v.id) ? ' · ★ saved' : ''}`)))),
+        h('div', { class: 'm', title: v.recent ? `Measured over the ${Math.round(v.recent.hours)} hours up to ${ageText(v.recent.at)}` : '' }, `${fmtNum(v.views)} views · ${ageText(v.publishedAt)}${v.recent ? ` · ${fmtNum(v.recent.perDay)}/day now` : ''}${saved.has(v.id) ? ' · ★ saved' : ''}`)))),
     h(
       'details',
       {},

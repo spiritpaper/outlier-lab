@@ -17,7 +17,8 @@ Related numbers:
 | --- | --- |
 | Score vs average | views ÷ mean views of the same 30 videos |
 | Channel percentile | share of the channel's recent same-format videos (excluding this one) with fewer views; ties count half. Shown as "Top 3%" / "Bottom 20%". |
-| Views per day | views ÷ days since publishing (views per hour under 2 days) |
+| Avg views per day | views ÷ days since publishing (views per hour under 2 days): the lifetime average |
+| Views per day now | views gained between two counts the extension saw, scaled to a day. It uses the newest count and the one closest to 24 hours before it, at least 3 hours apart. Counts are kept for 30 days after a video was last seen, in the temporary API cache. |
 | Like rate / comment rate | likes ÷ views, comments ÷ views |
 | Like rate vs channel | this video's like rate ÷ the median like rate of the channel's recent videos |
 | Views ÷ subscribers | video views ÷ channel subscribers |

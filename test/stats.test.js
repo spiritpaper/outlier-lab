@@ -229,3 +229,39 @@ test('channelGrowth measures change over a window of daily snapshots', () => {
   assert.equal(channelGrowth(h, 365, now).subs, 400);
   assert.equal(channelGrowth(h.slice(0, 1), 30, now), null);
 });
+
+import { addViewPoint, recentViews } from '../src/lib/stats.js';
+
+const H = 3_600_000;
+
+test('view history keeps an early anchor while counts arrive often', () => {
+  let pts = [];
+  // A count every 20 minutes for 2 hours.
+  for (let i = 0; i <= 6; i++) pts = addViewPoint(pts, i * 20 * 60_000, 1000 + i * 10);
+  assert.equal(pts[0][0], 0); // the first count is never replaced
+  for (let i = 2; i < pts.length; i++) assert.ok(pts[i][0] - pts[i - 2][0] >= H);
+  assert.deepEqual(pts.at(-1), [2 * H, 1060]);
+  assert.deepEqual(addViewPoint(pts, 3 * H, null), pts);
+});
+
+test('view history thins to one count per day after 2 days', () => {
+  let pts = [];
+  for (let i = 0; i < 24 * 5; i += 2) pts = addViewPoint(pts, i * H, i * 100);
+  const old = pts.filter(([t]) => 24 * 5 * H - 2 * H - t > 2 * 86_400_000);
+  const days = old.map(([t]) => Math.floor(t / 86_400_000));
+  assert.equal(new Set(days).size, days.length);
+  assert.ok(pts.length <= 40);
+});
+
+test('recent views compare the newest count with the one nearest a day earlier', () => {
+  // Newest at 28h; the others are 28h, 8h and 2h back (2h is too close).
+  const pts = [[0, 1000], [20 * H, 1800], [26 * H, 2400], [28 * H, 2500]];
+  const r = recentViews(pts);
+  assert.equal(r.hours, 28);
+  assert.equal(r.gained, 1500);
+  assert.equal(r.perDay, (1500 / 28) * 24);
+  assert.equal(r.at, 28 * H);
+  assert.equal(recentViews([[0, 10], [2 * H, 50]]), null); // under 3 hours apart
+  assert.equal(recentViews([[0, 10]]), null);
+  assert.equal(recentViews([[0, 100], [10 * H, 90]]).gained, 0); // counts can dip; never negative
+});

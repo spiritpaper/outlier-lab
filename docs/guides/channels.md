@@ -17,7 +17,7 @@ After following, check the card shows the channel you meant: a mistyped handle c
 One card per channel:
 
 - subscribers and their **30-day change**, **median views** (long-form and Shorts), uploads per week, **hit rate** (share of recent videos at 2x+ the channel's median) and **trend**
-- the **latest uploads** with their outlier scores
+- the **latest uploads** with their outlier scores and, once measured, their **views per day now**. The daily refresh notes each upload's views, so after the second refresh you see which competitor videos are picking up speed right now
 - **Growth & notes**: subscriber and median-view charts from the daily history, plus your own notes ("what to learn from this channel")
 
 Filter by **Learn from / Competitors**, sort by latest upload, growth, median views or hit rate. **Refresh now** updates every channel immediately (~5 units each); otherwise it happens once a day automatically.

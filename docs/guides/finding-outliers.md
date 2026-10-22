@@ -21,7 +21,8 @@ Hover a badge to see the channel median, views and age. Too much noise? In the p
 When you watch a video, a **Outlier Lab** panel appears at the top of the sidebar (on Shorts it floats on the right):
 
 - **Outlier score** and verdict, compared with the channel's median
-- **Views per day / per hour**, channel median and average, like and comment rates, subscribers, views ÷ subscribers, age and the **channel trend** (growing, stable or declining)
+- **Avg views per day** (per hour under 2 days old), the lifetime average, and **views per day now**: the views it actually gained lately, measured from two view counts at least 3 hours apart. The extension notes a video's views every time it fetches them (badges, this panel, saved ideas, followed channels), at no extra quota, so it appears once you come across the video again at least 3 hours later; until then it shows —
+- channel median and average, like and comment rates, subscribers, views ÷ subscribers, age and the **channel trend** (growing, stable or declining)
 - **Most replayed**: YouTube's replay heatmap with clickable peaks (jump to the moments viewers rewatch)
 - Buttons:
   - **Save idea**: adds the video to Saved outliers (with a full stats snapshot)

@@ -186,6 +186,50 @@ export function trackingStats(history = []) {
   };
 }
 
+// ---------- Views per day, measured ----------
+//
+// The API only gives a video's total views. Each time the extension fetches
+// them it keeps [time, views]; two counts some hours apart give the views a
+// video is getting now, not just its lifetime average.
+
+const HOUR_MS = 3_600_000;
+const MAX_VIEW_POINTS = 40;
+
+/** `points` with [t, views] added: about an hour apart at most, one per day once older than 2 days. */
+export function addViewPoint(points = [], t, views) {
+  if (!Number.isFinite(views)) return points;
+  // Within an hour of the point before last, the newest count replaces the
+  // last one, so the earlier anchor stays and the gap can still grow.
+  const next = points.length >= 2 && t - points.at(-2)[0] < HOUR_MS ? [...points.slice(0, -1), [t, views]] : [...points, [t, views]];
+  const out = [];
+  for (const p of next) {
+    const prev = out.at(-1);
+    const sameOldDay = prev && t - p[0] > 2 * DAY_MS && Math.floor(prev[0] / DAY_MS) === Math.floor(p[0] / DAY_MS);
+    if (sameOldDay) out[out.length - 1] = p;
+    else out.push(p);
+  }
+  return out.slice(-MAX_VIEW_POINTS);
+}
+
+/**
+ * The views a video is getting lately: its newest count against the one
+ * closest to a day before it (at least 3 hours apart, so a few minutes of
+ * noise don't count). Returns { perDay, gained, hours, at } or null.
+ */
+export function recentViews(points = [], { minHours = 3, targetHours = 24 } = {}) {
+  if (points.length < 2) return null;
+  const [at, views] = points.at(-1);
+  let best = null;
+  for (const [t, v] of points.slice(0, -1)) {
+    const hours = (at - t) / HOUR_MS;
+    if (hours < minHours) continue;
+    if (!best || Math.abs(hours - targetHours) < Math.abs(best.hours - targetHours)) best = { v, hours };
+  }
+  if (!best) return null;
+  const gained = Math.max(0, views - best.v);
+  return { perDay: (gained / best.hours) * 24, gained, hours: best.hours, at };
+}
+
 // ---------- Keyword exploration ----------
 
 // Thresholds used for keyword research, after 1of10's outlier-hunting presets.

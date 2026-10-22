@@ -3,7 +3,7 @@
 // The daily radar pass also records each channel's stats into its history,
 // so growth tracking costs no extra API calls.
 
-import { getBaseline, getVideos, resolveChannelId } from './youtube.js';
+import { getBaseline, getVideos, resolveChannelId, recentViewsMany } from './youtube.js';
 import { channelProfile, newOutliers } from '../lib/stats.js';
 
 const MAX_HISTORY = 400;
@@ -122,7 +122,10 @@ export async function following() {
           })),
         )
         .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-      out.push({ ...ch, profile: channelProfile(base), uploads: uploads.slice(0, 12), staleSince: base.staleSince, staleReason: base.staleReason });
+      const shown = uploads.slice(0, 12);
+      const recent = await recentViewsMany(shown.map((v) => v.id));
+      for (const v of shown) v.recent = recent[v.id] ?? null;
+      out.push({ ...ch, profile: channelProfile(base), uploads: shown, staleSince: base.staleSince, staleReason: base.staleReason });
     } catch (err) {
       out.push({ ...ch, error: err.message });
     }
