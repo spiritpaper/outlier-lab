@@ -664,6 +664,7 @@ Rules:
 - Every problem needs a concrete fix: what to change, in which video or upload, and how the creator will see in these same numbers whether it worked.
 - When a transcript line is given for a drop, use it: say what in that line likely made viewers leave and rewrite it.
 - Compare videos with each other and with the channel's own medians; compare with the followed channels only where it is like-for-like.
+- Judge growth from the trend, not one period: the growth blocks, impressions and CTR, views from non-subscribers, browse and suggested traffic, and how much comes from new uploads vs the back catalog. Say which lever is the bottleneck: reach (impressions), packaging (CTR), retention, or upload pace.
 - If something can't be judged from this data (for example click-through rate when it isn't provided), say so in one line instead of guessing.
 - General YouTube knowledge can explain a fix, but label it as a rule of thumb; never present outside benchmarks or thresholds as facts about this channel.
 - Praise only what the numbers prove, briefly.
@@ -678,6 +679,9 @@ Review my channel. Structure:
 
 ## Verdict
 Three sentences at most: where the channel really stands and the single biggest thing holding it back.
+
+## Is it growing?
+Growing, flat or shrinking, with the numbers that show it (the blocks, reach, new viewers, traffic). Then the bottleneck: reach, CTR, retention or upload pace, and why.
 
 ## Problems, worst first
 For each problem (as many as the data shows, usually 4-8):

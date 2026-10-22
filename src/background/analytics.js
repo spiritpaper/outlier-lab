@@ -156,3 +156,33 @@ export async function audienceProfile(days = 90) {
   ]);
   return { days, demographics, countries, devices, subscribed, traffic };
 }
+
+const BLOCK_DAYS = 28;
+const BLOCKS = 6;
+
+/**
+ * What tells whether the channel is growing, for the AI review: reach
+ * (impressions and CTR), views by format, subscribers vs not and traffic
+ * sources, each for the last `days` days and the period before, plus a daily
+ * series over the last 6 four-week blocks. Each part fails on its own (not
+ * every account gets every metric), as null.
+ */
+export async function growth(days = 28) {
+  const end = 2;
+  const cur = { startDate: daysAgo(end + days - 1), endDate: daysAgo(end) };
+  const prev = { startDate: daysAgo(end + 2 * days - 1), endDate: daysAgo(end + days) };
+  const span = { startDate: daysAgo(end + BLOCK_DAYS * BLOCKS - 1), endDate: daysAgo(end) };
+  const safe = (p) => p.catch((err) => (err.reason === 'signedOut' || err.reason === 'apiDisabled' ? Promise.reject(err) : null));
+  const both = (params) =>
+    safe(Promise.all([report({ ...cur, ...params }), report({ ...prev, ...params })]).then(([current, previous]) => ({ current, previous })));
+  const REACH = 'videoThumbnailImpressions,videoThumbnailImpressionsClickRate';
+  const [reach, formats, subscribed, traffic, daily, dailyReach] = await Promise.all([
+    thumbnailMetricsUnavailable ? null : both({ metrics: REACH }),
+    both({ metrics: 'views,estimatedMinutesWatched,averageViewPercentage', dimensions: 'creatorContentType', sort: '-views' }),
+    both({ metrics: 'views,averageViewPercentage', dimensions: 'subscribedStatus' }),
+    both({ metrics: 'views', dimensions: 'insightTrafficSourceType', sort: '-views' }),
+    safe(report({ ...span, metrics: 'views,estimatedMinutesWatched,subscribersGained,subscribersLost', dimensions: 'day', sort: 'day' })),
+    thumbnailMetricsUnavailable ? null : safe(report({ ...span, metrics: REACH, dimensions: 'day', sort: 'day' })),
+  ]);
+  return { days, blockDays: BLOCK_DAYS, endDate: span.endDate, reach, formats, subscribed, traffic, daily, dailyReach };
+}

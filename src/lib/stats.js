@@ -386,6 +386,8 @@ export function channelProfile(base, now = Date.now()) {
     monthlyChange: trend?.monthlyChange ?? null,
     likeRate: median(long.map(rate)),
     viewsPerSub: lm && c.subs ? lm / c.subs : null,
+    // When the recent uploads went up, to line upload pace up with growth.
+    uploadDates: { long: long.map((v) => v.publishedAt), short: short.map((v) => v.publishedAt) },
   };
 }
 

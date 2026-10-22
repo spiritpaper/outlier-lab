@@ -37,7 +37,7 @@ import { listProjects, createProject, updateProject, deleteProject, mutateProjec
 import { followKeyword, unfollowKeyword, listKeywords, trendCheck, mutateAlerts } from './trends.js';
 import { trackPublished, parseVideoId } from './published.js';
 import { videoTotals } from './analytics.js';
-import { overview, topVideos, retention, trafficSources, audienceProfile } from './analytics.js';
+import { overview, topVideos, retention, trafficSources, audienceProfile, growth } from './analytics.js';
 import { watch, unwatch, compare, radarCheck, markRadarRead, clearRadar, updateBadge, parseChannelInput, gapData, following, updateFollow, mutateWatch, mutateRadar } from './watchlist.js';
 
 // holeRetentionDays: rabbit holes untouched for this long are deleted (0 = keep forever).
@@ -318,6 +318,7 @@ const handlers = {
   myRetention: ({ id, publishedAt }) => retention(id, publishedAt),
   myTraffic: ({ days, id }) => trafficSources(days, id),
   myAudience: ({ days }) => audienceProfile(days),
+  myGrowth: ({ days }) => growth(days),
   avatarGroups: () => listGroups(),
   avatarGroupSave: ({ group }) => saveGroup(group),
   avatarGroupDelete: ({ id }) => deleteGroup(id),

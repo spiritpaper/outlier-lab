@@ -38,11 +38,14 @@ Signing in also:
 **Review my channel with AI** (on My channel) writes a review of your channel built only on your own analytics for the selected period (7, 28 or 90 days):
 
 - totals against the previous period, and how daily views moved
+- **whether you're growing**: six 4-week blocks covering about 6 months, each with views, watch hours, net subscribers, impressions, click-through rate and how many videos and Shorts you uploaded, so the AI can tell a trend from one bad month
+- reach: thumbnail impressions and click-through rate for the channel, against the previous period
+- views by format (long-form, Shorts, live), the share of views from people who aren't subscribed (reaching new viewers), and how much came from videos published in the period vs older ones
 - every top video: views, watch time, % viewed, subscribers gained, outlier score against your own median, and impressions and click-through rate where the API provides them
 - retention of your most-viewed long-form videos: how many viewers are left at 10%, 50% and 90%, the steepest drop and rewatched moments as timestamps, and **what you said at the drop** if you've saved that video's transcript (Transcript → Save transcript in the panel on YouTube)
-- traffic sources, and your channel profile next to the channels you follow
+- traffic sources with their change from the previous period, and your channel profile next to the channels you follow
 
-The AI is told not to hold back. You get a verdict, then every problem, worst first, each with **What**, **Where** (video and timestamp, or metric), **Evidence** (the numbers), **Fix** and **Check** (which number should move if the fix works), followed by what's working, three experiments for your next uploads, and what the data can't tell. It may only use the data it was given; general YouTube advice is labeled as a rule of thumb.
+The AI is told not to hold back. You get a verdict, whether the channel is growing and what's holding it back (reach, CTR, retention or upload pace), then every problem, worst first, each with **What**, **Where** (video and timestamp, or metric), **Evidence** (the numbers), **Fix** and **Check** (which number should move if the fix works), followed by what's working, three experiments for your next uploads, and what the data can't tell. It may only use the data it was given; general YouTube advice is labeled as a rule of thumb.
 
 Open **The data this review was based on** under a review to see exactly what the AI saw. The last 12 reviews are kept (and backed up), so you can compare them over time from **Past reviews**.
 
@@ -50,6 +53,6 @@ Open **The data this review was based on** under a review to see exactly what th
 
 - YouTube Analytics data lags by about 2 days.
 - It uses the Analytics API's own quota, not your 10,000 Data API units.
-- Thumbnail impressions and CTR aren't in Google's documented metric list; the extension requests them and shows them only if your account's API returns them.
+- Not every account gets thumbnail impressions and CTR, or views by format, through the API. The review uses whatever your account returns, and tells the AI not to judge CTR when it's missing.
 - Sign-in tokens last an hour, live only in memory and renew silently while you're signed in to Google in the browser. **Sign out** revokes the token and deletes cached analytics.
 - This uses Google's browser sign-in flow for extensions (`chrome.identity.launchWebAuthFlow`), which Google documents as a legacy method. If Google retires it, sign-in will need an update; nothing else is affected.

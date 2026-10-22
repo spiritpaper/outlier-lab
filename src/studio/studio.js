@@ -155,8 +155,11 @@ const REVIEW_RETENTION_VIDEOS = 6;
 
 /** Everything the review is built on, from your analytics (no YouTube Data quota beyond cached profiles). */
 async function gatherReview(auth, ov, top, pub, progress) {
-  progress('Reading traffic sources…');
-  const traffic = await send({ type: 'myTraffic', days: state.days }).catch(() => []);
+  progress('Reading reach, traffic and growth…');
+  const [traffic, growth] = await Promise.all([
+    send({ type: 'myTraffic', days: state.days }).catch(() => []),
+    send({ type: 'myGrowth', days: state.days }).catch(() => null),
+  ]);
   // Retention for the most-viewed long-form videos (Shorts curves say little).
   const ids = top.filter((r) => pub[r.video]?.format !== 'short').slice(0, REVIEW_RETENTION_VIDEOS).map((r) => r.video);
   const curves = {};
@@ -179,6 +182,7 @@ async function gatherReview(auth, ov, top, pub, progress) {
     transcripts,
     profile: rows.find((r) => r.mine && !r.error) ?? null,
     peers: rows.filter((r) => !r.mine),
+    growth,
   });
 }
 
