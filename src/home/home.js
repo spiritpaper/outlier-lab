@@ -1,6 +1,7 @@
 import { mountShell } from '../lib/nav.js';
 import { send, h, fmtNum, fmtMult, tier, ageText, videoUrl } from '../lib/ui.js';
 import { channelGrowth } from '../lib/stats.js';
+import { pendingUpdate } from '../lib/versions.js';
 
 mountShell('home');
 const $ = (id) => document.getElementById(id);
@@ -49,12 +50,12 @@ if (steps.some(([done]) => !done)) {
 }
 
 // A newer release on GitHub (public build only; see background/updates.js).
-if (s.updateAvailable?.version) {
+const update = pendingUpdate(s.updateAvailable, chrome.runtime.getManifest().version);
+if (update) {
   $('grid').before(h('div', { class: 'banner update-banner' },
-    h('b', {}, `Outlier Lab ${s.updateAvailable.version} is out.`), ' ',
-    s.updateAvailable.zip && h('a', { href: s.updateAvailable.zip }, 'Download'), ' · ',
-    h('a', { href: s.updateAvailable.url, target: '_blank', rel: 'noopener' }, "What's new"), ' · ',
-    h('a', { href: page('options/options.html#updates') }, 'How to update')));
+    h('b', {}, `Outlier Lab ${update.version} is out.`), ' ',
+    h('a', { href: page('options/options.html#updates') }, 'How to update'), ' · ',
+    h('a', { href: update.url, target: '_blank', rel: 'noopener' }, "What's new")));
 }
 
 const unread = radar.filter((r) => !r.read);

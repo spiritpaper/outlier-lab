@@ -23,6 +23,7 @@
           <span>Provider</span>
           <select id="provider"></select>
         </label>
+        <p id="provider-privacy" class="muted small"></p>
 
         <div id="local-fields" class="field" hidden>
           <label class="field">
@@ -227,7 +228,8 @@
         <p class="muted small">You're running <b id="version"></b>. <span id="update-status"></span></p>
         <div id="update-box"></div>
         <div class="inline"><button id="check-update">Check for updates</button></div>
-        <p class="muted small">To update: unzip the new version over this extension's folder (same place, so your data stays). The extension notices the new files and reloads itself within a few minutes, once no Outlier Lab page is open. Or let a script do it: on Windows, double-click <code>scripts\update.cmd</code> in the extension's folder; on a Mac or Linux, run <code>sh scripts/update.sh .</code> inside it.</p>
+        <p class="muted small"><b>To update</b>, let the script in this extension's folder do it: on Windows, double-click <code>scripts\update.cmd</code>; on a Mac or Linux, run <code>sh scripts/update.sh .</code> inside the folder. It downloads the new version into the same folder, so your data stays, and the extension reloads itself within a few minutes, once no Outlier Lab page is open.</p>
+        <p class="muted small">Updating by hand instead: close Chrome first, unzip the new version from the release page over this extension's folder, choose <b>Replace</b> for every file, then open Chrome again. Don't load it from a new folder: that starts with empty storage.</p>
       </section>
       <p id="support-row" class="muted small" hidden>Enjoying Outlier Lab? <a id="support" target="_blank" rel="noopener"></a></p>
     </main>

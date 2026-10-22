@@ -91,6 +91,8 @@ async function injectIntoOpenTabs(reason) {
 }
 
 chrome.runtime.onInstalled.addListener(({ reason }) => {
+  // The notice was about this (or an older) version: drop it and check again at the next alarm.
+  if (reason === 'update') chrome.storage.local.remove(['updateAvailable', 'updateCheckedAt']).catch(() => {});
   if (reason === 'install' || reason === 'update') injectIntoOpenTabs(reason).catch(() => {});
 });
 chrome.runtime.onInstalled.addListener(() => localAiRule().catch(() => {}));

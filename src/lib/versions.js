@@ -14,3 +14,6 @@ export function compareVersions(a, b) {
 
 /** What identifies the files on disk: build.json's commit if present, else the manifest version. */
 export const stampOf = (build, manifest) => (build?.commit ? `${build.version ?? manifest?.version}@${build.commit}` : `${manifest?.version ?? '?'}`);
+
+/** The saved update notice, if it's still newer than `current` (it's stored, so it can outlive the update it announced). */
+export const pendingUpdate = (info, current) => (info?.version && compareVersions(info.version, current) > 0 ? info : null);
