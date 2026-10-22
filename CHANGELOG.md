@@ -2,6 +2,21 @@
 
 All notable changes to Outlier Lab (called YT Toolkit before 0.11.0). Each release's section becomes its GitHub Release notes.
 
+## [0.12.0] - 2026-10-22
+
+### Added
+- **Views per day now.** YouTube only gives a video's total views, so "views per day" was the lifetime average, which hides whether a video is still picking up speed. Outlier Lab now notes a video's views each time it fetches them (badges, the video panel, saved ideas, the daily refresh of followed channels), at no extra quota, and two counts at least 3 hours apart give the views it's getting now. The video panel shows it next to the lifetime average, and **Following** shows it on each channel's latest uploads. See [how it's calculated](docs/reference/metrics.md).
+- **The channel review can tell whether you're growing.** Besides this period vs the last, the AI now gets six 4-week blocks over about 6 months (views, watch hours, net subscribers, impressions, CTR, uploads), your channel's impressions and click-through rate, views by format, the share of views from non-subscribers, views from new uploads vs older ones, and traffic sources with their change. The review answers "Is it growing?" and names the bottleneck: reach, CTR, retention or upload pace. Parts your account's API doesn't return are left out.
+- Settings shows, under each AI provider, what its terms allow it to do with what you send, and [Privacy](docs/reference/privacy.md) compares them. Gemini's free tier, for example, may use prompts to improve Google's products; Local AI never sends anything.
+
+### Fixed
+- **The update notice pointed at the zip file** and could outlive the update it announced, still showing an old version and its old link after you updated. It now links to the update steps and the release page, disappears once that version is installed, and updating clears it.
+- Click-through rates in the channel review are read correctly whether YouTube reports them as a fraction or a percent.
+
+### Changed
+- The update steps lead with the update script. Updating by hand: close Chrome first, then unzip over the same folder.
+- README and Privacy say it plainly: Outlier Lab is local, with no server or account, and your research is yours.
+
 ## [0.11.3] - 2026-10-19
 
 ### Fixed
