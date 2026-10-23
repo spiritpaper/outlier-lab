@@ -18,6 +18,7 @@ import {
   parseHeatmap,
   addViewPoint,
   recentViews,
+  viewCountMixed,
   OUTLIER_MIN,
 } from '../lib/stats.js';
 import { addSuggestions } from '../lib/web.js';
@@ -293,6 +294,7 @@ export async function videoReport(id) {
     baseline: base[scored.format],
     trend: channelTrend(base.recent[scored.format]),
     recent: (await recentViewsMany([id]))[id] ?? null,
+    viewCountMixed: viewCountMixed(video.publishedAt, base.recent[scored.format]),
   };
 }
 

@@ -52,6 +52,17 @@ export function computeBaseline(videos, now = Date.now()) {
   return { median: median(views), mean: mean(views), sample: pool.length };
 }
 
+// From 24 August 2026 YouTube counts a view from the first frame (Home autoplay
+// included), where it used to wait a few seconds, so newer videos' counts run
+// higher than older ones'.
+export const VIEW_COUNT_CHANGE = '2026-08-24T00:00:00Z';
+
+/** True when a video counted the new way is scored against older videos counted the old way. */
+export function viewCountMixed(publishedAt, recent = []) {
+  const change = Date.parse(VIEW_COUNT_CHANGE);
+  return Date.parse(publishedAt) >= change && recent.slice(0, BASELINE_SAMPLE).some((v) => Date.parse(v.publishedAt) < change);
+}
+
 export function multiplier(views, baselineMedian) {
   if (!Number.isFinite(views) || !baselineMedian) return null;
   return views / baselineMedian;

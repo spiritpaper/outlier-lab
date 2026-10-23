@@ -4,6 +4,7 @@ import {
   median,
   parseDuration,
   computeBaseline,
+  viewCountMixed,
   multiplier,
   classifyFormat,
   toCsv,
@@ -264,4 +265,14 @@ test('recent views compare the newest count with the one nearest a day earlier',
   assert.equal(recentViews([[0, 10], [2 * H, 50]]), null); // under 3 hours apart
   assert.equal(recentViews([[0, 10]]), null);
   assert.equal(recentViews([[0, 100], [10 * H, 90]]).gained, 0); // counts can dip; never negative
+});
+
+test('flags a new-count video scored against videos counted the old way', () => {
+  const old = { publishedAt: '2026-08-01T10:00:00Z' };
+  const fresh = { publishedAt: '2026-09-10T10:00:00Z' };
+  assert.equal(viewCountMixed('2026-10-01T00:00:00Z', [fresh, old]), true);
+  assert.equal(viewCountMixed('2026-10-01T00:00:00Z', [fresh, fresh]), false); // all counted the new way
+  assert.equal(viewCountMixed('2026-08-20T00:00:00Z', [old]), false); // the video itself is from before
+  assert.equal(viewCountMixed('2026-10-01T00:00:00Z', [...Array(30).fill(fresh), old]), false); // outside the baseline's 30
+  assert.equal(viewCountMixed('2026-10-01T00:00:00Z'), false);
 });

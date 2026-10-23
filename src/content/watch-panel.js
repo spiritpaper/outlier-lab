@@ -405,6 +405,13 @@ YTK.watchPanel = (() => {
           ? `vs. median of ${YTK.fmtNum(b.median)} views across the channel's last ${b.sample} ${formatWord}`
           : `This channel has no ${formatWord} to compare against yet.`,
       ),
+      report.viewCountMixed &&
+        h(
+          'div',
+          { class: 'sub', title: 'From 24 August 2026, YouTube counts a view from the first frame, Home autoplay included. Older videos were counted the old way, so this score can read a little high.' },
+          'Counted the new way (since 24 Aug 2026) against older videos: the score may read a little high. ',
+          h('a', { href: 'https://spiritpaper.site/outlier-lab/docs/data/outliers.html', target: '_blank', rel: 'noopener' }, 'Why'),
+        ),
       h(
         'div',
         { class: 'grid' },
