@@ -97,6 +97,9 @@ export async function signIn() {
   );
   const body = await res.json().catch(() => ({}));
   const ch = body.items?.[0];
+  if (res.status === 403 && /not been used|disabled/i.test(body.error?.message ?? '')) {
+    throw new AuthError('Enable the "YouTube Data API v3" in the Google Cloud project of your sign-in client.', 'apiDisabled');
+  }
   if (!res.ok || !ch) {
     throw new AuthError(body.error?.message ?? 'This Google account has no YouTube channel.', 'noChannel');
   }

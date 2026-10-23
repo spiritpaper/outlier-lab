@@ -64,6 +64,9 @@ Add your Google account as a **test user** under Google Auth Platform → Audien
 **"Enable the YouTube Analytics API in your Google Cloud project."**
 Enable it [here](https://console.cloud.google.com/apis/library/youtubeanalytics.googleapis.com).
 
+**"Enable the YouTube Data API v3 in the Google Cloud project of your sign-in client."**, or Google's "YouTube Data API v3 has not been used in project … or it is disabled" when you sign in.
+Sign-in finds your channel through the Data API, billed to the project that holds your OAuth client. Enable [YouTube Data API v3](https://console.cloud.google.com/apis/library/youtube.googleapis.com) in that project, wait a minute, and sign in again.
+
 **"Your Google session expired. Sign in again."**
 Sign-in renews silently while you're signed in to Google in the browser; if you signed out of Google, sign in again on the My channel page.
 

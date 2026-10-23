@@ -6,7 +6,7 @@ Sign in with Google to see your **own** analytics: retention curves, watch time,
 
 Use the same Google Cloud project as your YouTube API key.
 
-1. Enable the [YouTube Analytics API](https://console.cloud.google.com/apis/library/youtubeanalytics.googleapis.com).
+1. Enable the [YouTube Analytics API](https://console.cloud.google.com/apis/library/youtubeanalytics.googleapis.com), and check that the [YouTube Data API v3](https://console.cloud.google.com/apis/library/youtube.googleapis.com) is enabled in the same project. Sign-in uses the Data API to find your channel, so both must be on in the project that holds your sign-in client, even if your API key lives in another project.
 2. Open [Google Auth Platform](https://console.cloud.google.com/auth/overview):
    - set an app name and your email
    - choose **External**
