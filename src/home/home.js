@@ -2,6 +2,7 @@ import { mountShell } from '../lib/nav.js';
 import { send, h, fmtNum, fmtMult, tier, ageText, videoUrl } from '../lib/ui.js';
 import { channelGrowth } from '../lib/stats.js';
 import { pendingUpdate } from '../lib/versions.js';
+import { guide } from '../lib/guide.js';
 
 mountShell('home');
 const $ = (id) => document.getElementById(id);
@@ -45,7 +46,8 @@ if (steps.some(([done]) => !done)) {
   $('setup').replaceWith(
     h('section', { class: 'setup' }, h('h2', {}, `Getting started · ${steps.filter(([d]) => d).length} of ${steps.length} done`),
       h('ul', { class: 'steps' }, steps.map(([done, label, link, linkText]) =>
-        h('li', {}, h('span', { class: done ? 'ok' : 'todo' }, done ? '✓' : '○'), h('span', {}, label), !done && link !== 'popup' && h('a', { href: page(link) }, `${linkText} →`), !done && link === 'popup' && h('span', { class: 'muted small', style: 'margin-left:auto' }, 'click the Outlier Lab icon in the toolbar'))))),
+        h('li', {}, h('span', { class: done ? 'ok' : 'todo' }, done ? '✓' : '○'), h('span', {}, label), !done && link !== 'popup' && h('a', { href: page(link) }, `${linkText} →`), !done && link === 'popup' && h('span', { class: 'muted small', style: 'margin-left:auto' }, 'click the Outlier Lab icon in the toolbar')))),
+      h('p', { class: 'muted small' }, 'New here? The ', h('a', { href: guide('docs/getting-started.html'), target: '_blank', rel: 'noopener' }, 'guide'), ' walks through every step, then shows how to read your numbers and how YouTube recommends videos.')),
   );
 }
 

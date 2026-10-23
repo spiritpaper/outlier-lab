@@ -6,6 +6,7 @@ import { mountShell } from '../lib/nav.js';
 import { send, h, emptyState, ageText, copyButton } from '../lib/ui.js';
 import { parseTime } from '../lib/notes.js';
 import { formatTime } from '../lib/stats.js';
+import { guide } from '../lib/guide.js';
 
 mountShell('downloads');
 const main = document.getElementById('main');
@@ -47,7 +48,7 @@ function setupCard() {
         h('li', {}, 'Unzip it and run ', h('code', {}, 'outlier-lab-companion'), ' (on Windows, double-click ', h('code', {}, 'outlier-lab-companion.exe'), '; on a Mac or Linux, run it in a terminal).'),
         h('li', {}, 'When it asks, paste this ID:', idBox()),
         h('li', {}, 'Come back and click ', h('b', {}, 'Check again'), '.')),
-      h('div', { class: 'idbox' }, h('button', { class: 'primary', onclick: refresh }, 'Check again'), h('a', { href: 'https://github.com/spiritpaper/outlier-lab/blob/main/docs/guides/video-downloads.md', target: '_blank', rel: 'noopener' }, 'Setup guide')));
+      h('div', { class: 'idbox' }, h('button', { class: 'primary', onclick: refresh }, 'Check again'), h('a', { href: guide('docs/guides/video-downloads.html'), target: '_blank', rel: 'noopener' }, 'Setup guide')));
   }
   const s = status;
   return h('section', { class: 'card' },

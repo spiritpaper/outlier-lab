@@ -2,6 +2,7 @@
 // doing (Discover · Channels · Create · You). Pages call mountShell() first.
 
 import { SUPPORT_URL, SUPPORT_LABEL } from './support.js';
+import { GUIDE_URL } from './guide.js';
 import { buildIndex, search, KINDS } from './search.js';
 
 const ICONS = {
@@ -22,6 +23,7 @@ const ICONS = {
   book: '<path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11M9 8h6"/>',
   download: '<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>',
   menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
+  help: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6v.6M12 17h.01"/>',
   heart: '<path d="M12 20s-7-4.4-9.3-9A5 5 0 0 1 12 6a5 5 0 0 1 9.3 5C19 15.6 12 20 12 20z"/>',
 };
 
@@ -279,6 +281,14 @@ export function mountShell(active) {
   const foot = document.createElement('div');
   foot.className = 'nav-foot';
   foot.innerHTML = '<div class="nav-quota"><div class="nav-quota-text"></div><div class="nav-quota-bar"><div></div></div></div>';
+  const g = document.createElement('a');
+  g.className = 'nav-item';
+  g.href = GUIDE_URL;
+  g.target = '_blank';
+  g.rel = 'noopener';
+  g.innerHTML = icon('help');
+  g.append(document.createTextNode('Guide'));
+  foot.append(g);
   if (SUPPORT_URL) {
     const s = document.createElement('a');
     s.className = 'nav-item nav-support';

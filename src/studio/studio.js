@@ -7,6 +7,7 @@ import { titleChecks, similarTitles } from '../lib/titles.js';
 import { activeAi, generate, gapsPrompt, titlesPrompt, channelReviewPrompt, PROVIDERS } from '../lib/ai.js';
 import { reviewData } from '../lib/channel-review.js';
 import { markdownToHtml } from '../lib/markdown.js';
+import { guide } from '../lib/guide.js';
 
 const shell = mountShell('mine');
 
@@ -53,12 +54,12 @@ function setupCard(auth, err) {
     'section',
     { class: 'card setup' },
     h('h2', {}, 'Connect your YouTube channel'),
-    h('p', { class: 'muted' }, 'Sign in with Google to see your own retention curves, watch time and subscriber data, and compare yourself with other channels. One-time setup, about 5 minutes, in the same Google Cloud project as your YouTube API key:'),
+    h('p', { class: 'muted' }, 'Sign in with Google to see your own retention curves, watch time and subscriber data, and compare yourself with other channels. One-time setup, about 5 minutes, in the same Google Cloud project as your YouTube API key. Both APIs below must be on in the project that holds your sign-in client:'),
     err && errorBox(err),
     h(
       'ol',
       {},
-      h('li', {}, 'Enable the ', h('a', { href: 'https://console.cloud.google.com/apis/library/youtubeanalytics.googleapis.com', target: '_blank' }, 'YouTube Analytics API'), '.'),
+      h('li', {}, 'Enable the ', h('a', { href: 'https://console.cloud.google.com/apis/library/youtubeanalytics.googleapis.com', target: '_blank' }, 'YouTube Analytics API'), ', and check the ', h('a', { href: 'https://console.cloud.google.com/apis/library/youtube.googleapis.com', target: '_blank' }, 'YouTube Data API v3'), ' is enabled too (sign-in uses it to find your channel).'),
       h('li', {}, 'Open ', h('a', { href: 'https://console.cloud.google.com/auth/overview', target: '_blank' }, 'Google Auth Platform'), ': set an app name and your email, choose ', h('b', {}, 'External'), ', and under ', h('b', {}, 'Audience'), ' add your own Google account as a ', h('b', {}, 'test user'), '.'),
       h('li', {}, 'Under ', h('a', { href: 'https://console.cloud.google.com/auth/clients', target: '_blank' }, 'Clients'), ', create a client of type ', h('b', {}, 'Web application'), ' and add this ', h('b', {}, 'Authorized redirect URI'), ':', h('div', { class: 'row', style: 'margin-top:6px' }, h('code', {}, auth.redirectUri), copyBtn)),
       h('li', {}, 'Paste the client ID here and sign in. Google will say the app is unverified. It\'s your own app, so choose ', h('b', {}, 'Continue'), '.'),
@@ -263,7 +264,7 @@ function header(auth) {
     'div',
     { class: 'me' },
     auth.me?.thumb && h('img', { src: auth.me.thumb, alt: '' }),
-    h('div', { class: 'grow' }, h('h2', {}, auth.me?.title ?? 'Your channel'), h('div', { class: 'muted small' }, 'Analytics lag about 2 days behind.')),
+    h('div', { class: 'grow' }, h('h2', {}, auth.me?.title ?? 'Your channel'), h('div', { class: 'muted small' }, 'Analytics lag about 2 days behind. ', h('a', { href: guide('docs/data/diagnose-a-video.html'), target: '_blank', rel: 'noopener' }, 'How to read these numbers'))),
     h('div', { class: 'seg' }, [7, 28, 90].map((d) => h('button', { class: state.days === d ? 'on' : '', onclick: () => { state.days = d; renderMine(); } }, `${d} days`))),
     h('button', { onclick: async () => { await send({ type: 'signOut' }); renderMine(); } }, 'Sign out'),
   );
@@ -366,7 +367,7 @@ async function loadRetention(top, pub) {
   const totalTraffic = traffic.reduce((n, t) => n + t.views, 0) || 1;
 
   card.replaceChildren(
-    h('h3', {}, 'Audience retention'),
+    h('div', { class: 'row' }, h('h3', { class: 'grow', style: 'margin:0' }, 'Audience retention'), h('a', { class: 'small', href: guide('docs/data/retention.html'), target: '_blank', rel: 'noopener' }, 'Reading retention curves')),
     h(
       'div',
       { class: 'ret-grid' },

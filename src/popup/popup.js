@@ -1,4 +1,5 @@
 import { SUPPORT_URL, SUPPORT_LABEL } from '../lib/support.js';
+import { GUIDE_URL } from '../lib/guide.js';
 
 const $ = (id) => document.getElementById(id);
 
@@ -85,6 +86,7 @@ $('clear-cache').addEventListener('click', async (e) => {
 renderKey();
 renderSettings();
 
+$('guide').href = GUIDE_URL;
 if (SUPPORT_URL) {
   $('support').href = SUPPORT_URL;
   $('support').textContent = `♥ ${SUPPORT_LABEL}`;
