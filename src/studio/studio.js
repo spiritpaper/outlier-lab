@@ -481,7 +481,7 @@ async function renderCompare() {
       'section',
       { class: 'card' },
       h('h2', {}, 'Compare channels'),
-      h('p', { class: 'muted small' }, 'Every number comes from public data with the same math for every channel, your own included. Watched channels also feed the Radar.'),
+      h('p', { class: 'muted small' }, 'Every number comes from public data with the same math for every channel, your own included. Watched channels also feed the Radar. ', h('a', { href: guide('docs/data/growth.html'), target: '_blank', rel: 'noopener' }, 'Is a channel growing?')),
       h(
         'form',
         {
@@ -710,6 +710,7 @@ async function renderGaps() {
         h('button', { onclick: async () => { gapCache = null; renderGaps(); } }, 'Refresh'), aiBtn),
       h('p', { class: 'muted small' },
         `${data.outliers.length} outliers (2x+) among the recent uploads of ${data.watched} watched channel${data.watched === 1 ? '' : 's'}, compared with your ${data.mine.length} recent titles.`,
+        ' ', h('a', { href: guide('docs/data/outliers.html#from-outlier-to-your-own-idea'), target: '_blank', rel: 'noopener' }, 'From outlier to your own idea'),
         !data.myId && ' Set your channel on the Compare tab (or sign in) so topics you already covered are left out.'),
       aiBox,
     ),

@@ -26,4 +26,4 @@ aux_links:
   "GitHub":
     - "https://github.com/spiritpaper/outlier-lab"
 aux_links_new_tab: false
-footer_content: 'Outlier Lab is made by spiritpaper. <a href="https://spiritpaper.site/#support">Support the project</a> · <a href="https://github.com/spiritpaper/outlier-lab/issues">Bugs and ideas</a>'
+footer_content: 'Outlier Lab is made by spiritpaper. <a href="https://spiritpaper.site/#support">Support the project</a> · <a href="https://github.com/spiritpaper/outlier-lab/issues">Bugs and ideas</a> · MIT license'

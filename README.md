@@ -98,3 +98,7 @@ After editing, click the extension's reload icon in `chrome://extensions`, then 
 ## Support
 
 If Outlier Lab helps you, you can support its development. The link appears in the popup and Settings once `SUPPORT_URL` is set in `src/lib/support.js`. It stays hidden while that's empty.
+
+## License
+
+[MIT](LICENSE).

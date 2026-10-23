@@ -11,7 +11,7 @@ out="$1"
 rm -rf "$out"
 mkdir -p "$out/docs/guides" "$out/docs/reference" "$out/docs/development" "$out/docs/data" "$out/docs/youtube"
 cp site/_config.yml "$out/"
-cp -R site/_sass site/_includes site/images "$out/"
+cp -R site/_sass site/_includes site/images site/assets "$out/"
 
 # page <source> <destination> <title> <menu position> [parent]
 page() {
@@ -22,6 +22,7 @@ page() {
     # a folder's README is its index page on the website; the code stays on GitHub
     sed -e 's#](\([^)]*\)README\.md#](\1index.md#g' \
       -e 's#](\([./]*\)site/images/#](\1images/#g' \
+      -e 's#](LICENSE)#](https://github.com/spiritpaper/outlier-lab/blob/main/LICENSE)#g' \
       -e 's#](\(src\|scripts\|companion\|test\)/#](https://github.com/spiritpaper/outlier-lab/tree/main/\1/#g' "$1"
     printf '\n{%% endraw %%}\n'
   } >"$out/$2"
