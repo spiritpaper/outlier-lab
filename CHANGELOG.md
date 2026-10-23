@@ -2,6 +2,17 @@
 
 All notable changes to Outlier Lab (called YT Toolkit before 0.11.0). Each release's section becomes its GitHub Release notes.
 
+## [0.12.1] - 2026-10-23
+
+### Added
+- **A guide website: [spiritpaper.site/outlier-lab](https://spiritpaper.site/outlier-lab/).** Every guide and reference page, with screenshots and search, plus two new sections:
+  - **Reading your data**: whether an outlier is real and what to learn from it, finding why a video worked or didn't (impressions, CTR or retention), reading retention curves, and telling growth from one good month.
+  - **How YouTube works**: how recommendations work, ideas, titles and thumbnails, hooks and keeping viewers, Shorts, and common myths. Each claim says whether YouTube or experienced creators said it, with sources.
+- A **Guide** link in the sidebar and the popup. My channel links its numbers and retention curves to the pages that explain them.
+
+### Fixed
+- **Sign-in failed with Google's "YouTube Data API v3 has not been used in project…" message** when the project holding your sign-in client only had the Analytics API on. Sign-in uses the Data API to find your channel, so the setup steps now say to enable both, and the error says which API to turn on.
+
 ## [0.12.0] - 2026-10-22
 
 ### Added
