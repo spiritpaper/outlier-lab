@@ -21,6 +21,7 @@ page() {
     printf -- '---\n{%% raw %%}\n' # scripts and prompts are full of {braces}: Liquid must leave them alone
     # a folder's README is its index page on the website; the code stays on GitHub
     sed -e 's#](\([^)]*\)README\.md#](\1index.md#g' \
+      -e 's#](\([./]*\)site/images/#](\1images/#g' \
       -e 's#](\(src\|scripts\|companion\|test\)/#](https://github.com/spiritpaper/outlier-lab/tree/main/\1/#g' "$1"
     printf '\n{%% endraw %%}\n'
   } >"$out/$2"

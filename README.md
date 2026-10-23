@@ -9,6 +9,10 @@ Free, open source and **local**: there's no Outlier Lab server. Your research, i
 - **Test:** the **Audience lab** builds avatars of your real audience from your analytics and comments. Pitch ideas to them, ask them questions, and test-screen your title, opening and script before you publish.
 - **Learn:** after publishing, **Forecast vs reality** compares the screening with the real numbers and updates the avatars from real viewers. The **Lab notebook** keeps your notes, lessons and experiments, and brings the right ones back while you write.
 
+![Outlier badges on YouTube search results: 3.7x, 243x, 6.4x](site/images/badges.webp)
+
+![The Outlier Lab panel next to a YouTube video: a 189x breakout, its stats and the most-replayed moments](site/images/video-panel.webp)
+
 Every extension page shares one sidebar:
 
 | Section | Pages |

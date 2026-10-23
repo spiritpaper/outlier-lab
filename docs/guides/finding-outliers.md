@@ -14,11 +14,15 @@ On YouTube's home page, search results, sidebar and channel pages, each thumbnai
 | Bright green | 5–10x | Strong outlier |
 | Purple | 10x and up | Breakout |
 
+![Outlier badges on YouTube search results](../../site/images/badges.webp)
+
 Hover a badge to see the channel median, views and age. Too much noise? In the popup, under **On YouTube**, set **Show badges at** to "≥ 2x only".
 
 ## The video panel
 
-When you watch a video, a **Outlier Lab** panel appears at the top of the sidebar (on Shorts it floats on the right):
+When you watch a video, an **Outlier Lab** panel appears at the top of the sidebar (on Shorts it floats on the right):
+
+![The video panel: outlier score, stats, the replay heatmap and buttons](../../site/images/video-panel.webp)
 
 - **Outlier score** and verdict, compared with the channel's median
 - **Avg views per day** (per hour under 2 days old), the lifetime average, and **views per day now**: the views it actually gained lately, measured from two view counts at least 3 hours apart. The extension notes a video's views every time it fetches them (badges, this panel, saved ideas, followed channels), at no extra quota, so it appears once you come across the video again at least 3 hours later; until then it shows —
@@ -41,6 +45,8 @@ On any channel page, click **Analyze channel** (bottom right), or use the button
 ## Saved outliers
 
 Everything you save lands in **Saved outliers** (sidebar → Create). Each card shows:
+
+![Saved outliers with their scores, channel rank, trend and replay heatmaps](../../site/images/saved-outliers.webp)
 
 - the outlier score, how the video ranks within its channel ("Top 3%"), score vs the channel *average*, the channel trend, like rate vs the channel's typical like rate
 - views gained since you saved it (saved outliers are re-checked daily)

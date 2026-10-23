@@ -4,6 +4,8 @@ Dig from a broad topic into specific sub-topics, one level at a time, and see wh
 
 Open it from the sidebar (**Discover → Keyword explorer**), from Home, or from **Explore topic** in the video panel.
 
+![The keyword explorer for "budget travel japan": opportunity 71, 25 of 39 results are outliers, and phrases to dig into](../../site/images/keyword-explorer.webp)
+
 ## Dig in
 
 1. Type a broad keyword, e.g. `budget travel`, and click **Dig in**. Autocomplete suggests real YouTube searches as you type.

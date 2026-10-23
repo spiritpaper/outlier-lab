@@ -14,6 +14,8 @@ After following, check the card shows the channel you meant: a mistyped handle c
 
 ## Following
 
+![Following: each channel's subscribers, median views, hit rate, trend and latest uploads with their outlier scores](../../site/images/following.webp)
+
 One card per channel:
 
 - subscribers and their **30-day change**, **median views** (long-form and Shorts), uploads per week, **hit rate** (share of recent videos at 2x+ the channel's median) and **trend**
@@ -46,6 +48,8 @@ Follow a keyword with **🔔 Alert me** in the keyword explorer, or **Watch keyw
 ## Content gaps
 
 Topics that keep producing outliers for the channels you follow, but that you haven't covered.
+
+![Content gaps: topics such as "Travel Guide" with the outliers behind them](../../site/images/content-gaps.webp)
 
 - The extension collects the 2x+ outliers among your followed channels' recent uploads and extracts their topics (words and two-word phrases).
 - It keeps topics that are much more common in outliers than in those channels' ordinary uploads ("lift"), so niche-wide words like "travel" drop out ([formula](../reference/metrics.md#content-gaps)).
