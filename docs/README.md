@@ -2,6 +2,8 @@
 
 Outlier Lab is a Chrome extension for YouTube creators. It finds outlier videos (videos that got far more views than their channel normally gets), helps you learn from the channels you follow, and walks your own videos from idea to published, with optional AI help.
 
+These pages are also on the website: **[spiritpaper.site/outlier-lab](https://spiritpaper.site/outlier-lab/)**.
+
 ## Start here
 
 - **[Getting started](getting-started.md)**: install the extension, add your YouTube API key, and optionally connect AI and Google sign-in.
@@ -23,6 +25,27 @@ Outlier Lab is a Chrome extension for YouTube creators. It finds outlier videos 
 | [Audience lab](guides/audience-lab.md) | Avatars of your real audience, for test screenings |
 | [Lab notebook](guides/lab-notebook.md) | Your notes, lessons and experiments, recalled while you write |
 | [Video downloads](guides/video-downloads.md) | The optional companion app: save videos, audio and clips |
+
+## Reading your data
+
+| Page | The question it answers |
+| --- | --- |
+| [Reading an outlier score](data/outliers.md) | Is this video really an outlier, and what can I learn from it? |
+| [Why a video worked (or didn't)](data/diagnose-a-video.md) | Was it the idea, the packaging or the video itself? |
+| [Reading retention curves](data/retention.md) | Where do viewers leave, and why? |
+| [Is the channel growing?](data/growth.md) | Is this a trend or one bad month? |
+
+## How YouTube works
+
+What YouTube has said publicly about how it recommends videos, next to what experienced creators have found, with sources.
+
+| Page | What it covers |
+| --- | --- |
+| [How recommendations work](youtube/recommendations.md) | Home, Suggested, Search and Shorts, and what YouTube looks at |
+| [Ideas, titles and thumbnails](youtube/packaging.md) | Getting the click without clickbait |
+| [Hooks and keeping viewers](youtube/hooks-and-retention.md) | The opening, the middle and the end |
+| [Shorts](youtube/shorts.md) | How Shorts differ, and turning Shorts viewers into long-form viewers |
+| [Myths](youtube/myths.md) | Posting times, deleting videos, Shorts hurting your channel, and more |
 
 ## Reference
 

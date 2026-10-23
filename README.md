@@ -69,9 +69,13 @@ Full walkthrough: **[Getting started](docs/getting-started.md)**.
 
 ## Documentation
 
+Also on the website: **[spiritpaper.site/outlier-lab](https://spiritpaper.site/outlier-lab/)**.
+
 | | |
 | --- | --- |
 | **Guides** | [Audience lab](docs/guides/audience-lab.md) · [Lab notebook](docs/guides/lab-notebook.md) · [Local AI](docs/guides/local-ai.md) · [Video downloads](docs/guides/video-downloads.md) · [Finding outliers](docs/guides/finding-outliers.md) · [Keyword explorer](docs/guides/keyword-explorer.md) · [Video web](docs/guides/video-web.md) · [Channels, Radar & gaps](docs/guides/channels.md) · [Idea board & projects](docs/guides/idea-board.md) · [Scripts, hooks & titles](docs/guides/scripts-and-titles.md) · [My channel](docs/guides/my-channel.md) · [AI assistant](docs/guides/ai-assistant.md) · [Data & storage](docs/guides/data-and-storage.md) |
+| **Reading your data** | [Reading an outlier score](docs/data/outliers.md) · [Why a video worked (or didn't)](docs/data/diagnose-a-video.md) · [Reading retention curves](docs/data/retention.md) · [Is the channel growing?](docs/data/growth.md) |
+| **How YouTube works** | [How recommendations work](docs/youtube/recommendations.md) · [Ideas, titles and thumbnails](docs/youtube/packaging.md) · [Hooks and keeping viewers](docs/youtube/hooks-and-retention.md) · [Shorts](docs/youtube/shorts.md) · [Myths](docs/youtube/myths.md) |
 | **Reference** | [How the numbers are calculated](docs/reference/metrics.md) · [API quota & caching](docs/reference/quota.md) · [Privacy](docs/reference/privacy.md) · [Troubleshooting](docs/reference/troubleshooting.md) |
 | **Developers** | [Architecture](docs/development/architecture.md) · [Testing & contributing](docs/development/testing.md) |
 
