@@ -1,0 +1,29 @@
+# The docs website (https://spiritpaper.site/outlier-lab/). site/build.sh gathers the pages
+# and the Pages workflow builds them with Jekyll and the Just the Docs theme.
+title: Outlier Lab
+description: "A creator's laboratory for YouTube: find the videos that beat their channel, read your numbers, and learn how YouTube recommends videos. Free, open source, local."
+url: "https://spiritpaper.site"
+baseurl: "/outlier-lab"
+logo: "/images/logo.png"
+
+remote_theme: just-the-docs/just-the-docs@v0.10.1
+plugins:
+  - jekyll-remote-theme
+  - jekyll-relative-links
+  - jekyll-seo-tag
+relative_links:
+  enabled: true
+  collections: false
+
+color_scheme: outlier
+search_enabled: true
+heading_anchors: true
+back_to_top: true
+back_to_top_text: "Back to top"
+aux_links:
+  "Download":
+    - "https://github.com/spiritpaper/outlier-lab/releases/latest"
+  "GitHub":
+    - "https://github.com/spiritpaper/outlier-lab"
+aux_links_new_tab: false
+footer_content: 'Outlier Lab is made by spiritpaper. <a href="https://spiritpaper.site/#support">Support the project</a> · <a href="https://github.com/spiritpaper/outlier-lab/issues">Bugs and ideas</a>'

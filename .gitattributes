@@ -11,3 +11,5 @@ companion/ export-ignore
 package.json export-ignore
 .gitignore export-ignore
 .gitattributes export-ignore
+# The docs website is built and published separately.
+site/ export-ignore
