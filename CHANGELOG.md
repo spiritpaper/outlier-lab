@@ -2,6 +2,19 @@
 
 All notable changes to Outlier Lab (called YT Toolkit before 0.11.0). Each release's section becomes its GitHub Release notes.
 
+## [0.12.2] - 2026-10-23
+
+### Added
+- **A note when a score mixes YouTube's old and new view counts.** From 24 August 2026, YouTube counts a view from the first frame, Home autoplay included. When a video counted the new way is scored against older videos counted the old way, the video panel says the score may read a little high, and links to [why](https://spiritpaper.site/outlier-lab/docs/data/outliers.html).
+- More links to the [guide](https://spiritpaper.site/outlier-lab/): Saved outliers links to reading an outlier score, Compare to telling whether a channel is growing, and Content gaps to turning an outlier into your own idea.
+- Outlier Lab is now under the [MIT license](LICENSE).
+
+### Fixed
+- Saved outliers showed leftover links in its header, one of them to the old "Creator studio".
+
+### Changed
+- The guide website follows your system's dark mode.
+
 ## [0.12.1] - 2026-10-23
 
 ### Added
